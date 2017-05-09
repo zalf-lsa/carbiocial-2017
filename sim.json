@@ -1,0 +1,132 @@
+{
+	"crop.json": "crop.json",
+	"site.json": "site.json",
+	"climate.csv": "climate.csv",
+	
+
+	"climate.csv-options": {
+		"no-of-climate-file-header-lines": 1,
+		"csv-separator": ",",
+		"header-to-acd-names": {
+			"DE-date": "date",
+			"Precipitation": "precip",
+			"TempMin": "tmin",
+			"TempMean": "tavg",
+			"TempMax": "tmax",
+			"Radiation": "globrad",
+			"Windspeed": "windspeed",
+			"RH": "relhumid"
+		}
+	},
+	
+	"debug?": false,
+	"path-to-output": "./",
+	"include-file-base-path": "./",
+	
+	"output": { 
+	  "write-file?": false,
+		"file-name": "out.csv",
+	
+		"__how to write and what to include in monica CSV output": "",
+		"csv-options": {
+			"include-header-row": true,
+			"include-units-row": true,
+			"csv-separator": ","
+		},
+		
+		"events": [
+			"crop", [
+				["Year", "LAST"], 
+				"Crop", 
+				["Date", "FIRST"], 
+				["Date", "LAST"], 
+				["Yield", "LAST"], 
+				["Nstress", "AVG"], 
+				["TraDef", "AVG"]
+			],
+
+			{"at": "anthesis"}, [
+				"Year",
+				"Crop",
+				["DOY|anthesis"]
+			],
+
+			{"at": "maturity"}, [
+				"Year",
+				"Crop",
+				["DOY|matur"]
+			],
+
+			{"while": ["Stage", "=", 1]},[
+				["Year", "LAST"], 
+				"Crop",
+				["Nstress", "AVG"], 
+				["TraDef", "AVG"]
+			],
+
+			{"while": ["Stage", "=", 2]},[
+				["Year", "LAST"], 
+				"Crop",
+				["Nstress", "AVG"], 
+				["TraDef", "AVG"]
+			],
+
+			{"while": ["Stage", "=", 3]},[
+				["Year", "LAST"], 
+				"Crop",
+				["Nstress", "AVG"], 
+				["TraDef", "AVG"]
+			],
+
+			{"while": ["Stage", "=", 4]},[
+				["Year", "LAST"], 
+				"Crop",
+				["Nstress", "AVG"], 
+				["TraDef", "AVG"]
+			],
+
+			{"while": ["Stage", "=", 5]},[
+				["Year", "LAST"], 
+				"Crop",
+				["Nstress", "AVG"], 
+				["TraDef", "AVG"]
+			],
+
+			{"while": ["Stage", "=", 6]},[
+				["Year", "LAST"], 
+				"Crop",
+				["Nstress", "AVG"], 
+				["TraDef", "AVG"]
+			]
+
+		]
+	},
+	
+	"start-date": "1981-01-01",
+	"end-date": "2012-12-31",
+	"use-leap-years": true,
+
+	"NumberOfLayers": 20,
+	"LayerThickness": [0.1, "m"],
+
+	"UseSecondaryYields": true,
+	"NitrogenResponseOn": true,
+	"WaterDeficitResponseOn": true,
+	"EmergenceMoistureControlOn": false,
+	"EmergenceFloodingControlOn": false,
+
+	"UseAutomaticIrrigation": false,
+	"AutoIrrigationParams": {
+		"irrigationParameters": {
+			"nitrateConcentration": [0, "mg dm-3"],
+			"sulfateConcentration": [0, "mg dm-3"]
+		},
+		"amount": [20, "mm"],
+		"threshold": 0.35
+	},
+
+	"UseNMinMineralFertilisingMethod": false,
+	"NMinUserParams": { "min": 25, "max": 90, "delayInDays": 20 },
+	"NMinFertiliserPartition": ["include-from-file", "monica-parameters/mineral-fertilisers/AN.json"],
+	"JulianDayAutomaticFertilising": 89
+}
