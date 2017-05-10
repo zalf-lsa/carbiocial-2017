@@ -3,38 +3,10 @@
     "Latitude": -13.47,
     "Slope": 0,
     "HeightNN": [210 , "m"],
-    "NDeposition": 30,
+    "NDeposition": 20,
 		
     "SoilProfileParameters": [
-			{
-				"Thickness": [0.2, "m"],
-				"SoilOrganicCarbon": [1.7, "%"],
-				"KA5TextureClass": "Lts",
-				"SoilRawDensity": ["bulk-density-class->raw-density", 2, ["KA5-texture-class->clay", "Lts"]],
-				"Lambda": ["sand-and-clay->lambda", ["KA5-texture-class->sand", "Lts"], ["KA5-texture-class->clay", "Lts"]]
-			}, 
-			{
-				"Thickness": [0.3, "m"],
-				"SoilOrganicCarbon": [0.9, "%"],
-				"KA5TextureClass": "Lts",
-				"SoilRawDensity": ["bulk-density-class->raw-density", 2, ["KA5-texture-class->clay", "Lts"]],
-				"Lambda": ["sand-and-clay->lambda", ["KA5-texture-class->sand", "Lts"], ["KA5-texture-class->clay", "Lts"]]
-			}, 
-			{
-				"Thickness": [0.3, "m"],
-				"SoilOrganicCarbon": [0.4, "%"],
-				"KA5TextureClass": "Ts2",
-				"SoilRawDensity": ["bulk-density-class->raw-density", 2, ["KA5-texture-class->clay", "Ts2"]],
-				"Lambda": ["sand-and-clay->lambda", ["KA5-texture-class->sand", "Ts2"], ["KA5-texture-class->clay", "Ts2"]]
-			},
-			{
-				"Thickness": [1.2, "m"],
-				"SoilOrganicCarbon": [0.4, "%"],
-				"KA5TextureClass": "Ts2",
-				"SoilRawDensity": ["bulk-density-class->raw-density", 2, ["KA5-texture-class->clay", "Ts2"]],
-				"Lambda": ["sand-and-clay->lambda", ["KA5-texture-class->sand", "Ts2"], ["KA5-texture-class->clay", "Ts2"]]
-			}
-    ]
+        ]
   },
 	
   "SoilTemperatureParameters": ["include-from-file", "monica-parameters/general/soil-temperature.json"],

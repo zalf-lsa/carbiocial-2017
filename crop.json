@@ -11,7 +11,7 @@
 			"is-winter-crop": false,
 			"cropParams": {
 				"species": ["include-from-file", "monica-parameters/projects/carbiocial/soybean.json"],
-				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/soybean/VII.json"]
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/soybean-VII.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/soybean.json"]
 		},
@@ -37,7 +37,7 @@
 	"fert-params": {
 		"PN": ["include-from-file", "monica-parameters/mineral-fertilisers/PN.json"],
 		"CADLM": ["include-from-file", "monica-parameters/organic-fertilisers/CADLM.json"],
-		"AS": ["include-from-file", "monica-parameters/organic-fertilisers/AS.json"]
+		"AS": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"]
 	}, 
 
 	"__relative date crop rotation example": "",
