@@ -42,6 +42,7 @@ PATHS = {
 }
 
 PATH_TO_ARCHIV_DIR = "/archiv-daten/md/projects/carbiocial/"
+#PATH_TO_ARCHIV_DIR = "Z:/projects/carbiocial/"
 start_send = time.clock()
 
 def main():
@@ -51,6 +52,7 @@ def main():
     socket = context.socket(zmq.PUSH)
     port = 6666 if len(sys.argv) == 1 else sys.argv[1]
     socket.connect("tcp://cluster2:" + str(port))
+    #socket.connect("tcp://localhost6666:" + str(port))
 
     soil_db_con = sqlite3.connect(PATHS[USER]["LOCAL_PATH_TO_REPO"] + "soil-carbiocial.sqlite")
 
@@ -90,62 +92,101 @@ def main():
     ]
 
     rotations = [
-        ["soybean", "cotton"],
-        ["soybean", "maize"]
+        ("soybean", "cotton"),
+        ("soybean", "maize")
     ]
 
-    n_rows = 2544
-    n_cols = 1927
+    n_rows = 2545
+    n_cols = 1928
 
-    def ascii_grid_to_2darray(path_to_file):
+    def ascii_grid_to_np2darray(path_to_file):
         "0=row, 1=col"
         with open(path_to_file) as file_:
             for header in range(0, 6):
                 file_.next()
-            out = []
+            out = np.empty((n_rows, n_cols), np.dtype(int))
+            r = 0
             for line in file_:
-                row = line.split(' ')
-                out.append(row)
+                c = 0
+                for val in line.split(' '):
+                    out[r, c] = int(val)
+                    c = c + 1
+                r = r + 1
             return out
     
-    def grids_to_dictof2darrays(path_to_grids):
+    def grids_to_3darrays(path_to_grids):
         "key=year, 0=row, 1=col"
         out = {}
         for filename in os.listdir(path_to_grids):
             year = int(filename.split(".")[0])
-            out[year] = ascii_grid_to_2darray(path_to_grids + "/" + filename)
+            out[year] = ascii_grid_to_np2darray(path_to_grids + "/" + filename)
+            print "created", year
         return out
     
+
+    profile_cache = {}
+    latitude_cache = {}
     def update_soil(row, col):
-        "in place update the env"        
+        "in place update the env"
+
         def lat(con, profile_id):
             query = """
-            select                
+                select                
                 lat_times_1000
-            from soil_profile_data 
-            where id = ? 
-            order by id
+                from soil_profile_data 
+                where id = ? 
+                order by id
             """
             con.row_factory = sqlite3.Row
             for row in con.cursor().execute(query, (profile_id,)):
                 if row["lat_times_1000"]:
                     return float(row["lat_times_1000"])
 
-        site["Latitude"] = lat(soil_db_con, soil_ids[row][col])
-        #site["HeightNN"] = #TODO
-        site["SiteParameters"]["SoilProfileParameters"] = soil_io.soil_parameters(soil_db_con, soil_ids[row][col])
-        for layer in site["SiteParameters"]["SoilProfileParameters"]:
-            layer["SoilBulkDensity"][0] = max(layer["SoilBulkDensity"][0], 600)
+        profile_id = soil_ids[row, col]
+        if profile_id in profile_cache:
+            profile = profile_cache[profile_id]
+            latitude = latitude_cache[profile_id]
+        else:
+            profile = soil_io.soil_parameters(soil_db_con, profile_id)
+            profile_cache[profile_id] = profile
+            latitude = lat(soil_db_con, profile_id)
+            latitude_cache[profile_id] = latitude
+        
+        for env in envs.itervalues():
+            env["params"]["siteParameters"]["Latitude"] = latitude
+            #site["HeightNN"] = #TODO
+            env["params"]["siteParameters"]["SoilProfileParameters"] = profile
 
-    soil_ids = ascii_grid_to_2darray(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc")    
+    soil_ids = ascii_grid_to_np2darray(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc")
 
     i= 0
+    
+    #create an env for each rotation (templates, customized within the loop)
+    crops_data = {}
+    envs = {}
+    for rot in rotations:
+        my_rot = []
+        for cp in rot:
+            my_rot.append(all_crops[cp])
+        crop["cropRotation"] = my_rot
+        envs[rot] = monica_io.create_env_json_from_json_config({
+                            "crop": crop,
+                            "site": site,
+                            "sim": sim,
+                            "climate": ""
+                        })
 
+        for i in range(len(rot)):
+            cp = rot[i]
+            if cp not in crops_data:
+                crops_data[cp] = envs[rot]["cropRotation"][i]
+        
+    #written = False
     for p in periods:
-        rain_onset = grids_to_dictof2darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"])
-        for row in range(n_rows):
+        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"])
+        for row in range(n_rows):            
             for col in range(n_cols):
-                if soil_ids[row][col] == "-9999":
+                if soil_ids[row, col] == -9999:
                     continue
                 #update soil data
                 update_soil(row, col)
@@ -153,24 +194,21 @@ def main():
                 #produce rotation
                 ref_dates = {}
                 for year in range(p["start_year"], p["end_year"] + 1):
-                    ref_dates[year] = int(rain_onset[year][row][col])
+                    ref_dates[year] = rain_onset[year][row, col]
                 for rot in rotations:
-                    abs_rot = generate_abs_rotation(rot, p["start_year"], p["end_year"], ref_dates)
-                    crop["cropRotation"] = abs_rot
-
-                    #create - send env
-                    env = monica_io.create_env_json_from_json_config({
-                        "crop": crop,
-                        "site": site,
-                        "sim": sim,
-                        "climate": ""
-                    })
+                    env = envs[rot]                    
+                    env["cropRotation"] = generate_abs_rotation(rot, p["start_year"], p["end_year"], ref_dates, crops_data)                    
 
                     #set climate file - read by the server
                     env["csvViaHeaderOptions"] = sim["climate.csv-options"]
                     env["csvViaHeaderOptions"]["start-date"] = sim["start-date"]
                     env["csvViaHeaderOptions"]["end-date"] = sim["end-date"]
                     env["pathToClimateCSV"] = PATH_TO_ARCHIV_DIR + "row-" + str(row) + "/col-" + str(col) + ".csv"
+
+                    #if not written:
+                    #    with open("test_env_new.json", "w") as _:
+                    #        _.write(json.dumps(env))
+                    #    written = True
                     
                     rot_id = rot[0] + "_" + rot[1]
                     env["customId"] = p["name"] \
@@ -178,7 +216,7 @@ def main():
                                         + "|" + str(col) \
                                         + "|" + rot_id
 
-                    socket.send_json(env) 
+                    #socket.send_json(env) 
                     print "sent env ", i, " customId: ", env["customId"]
                     i += 1
 

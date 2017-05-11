@@ -4,11 +4,8 @@ from datetime import date, timedelta
 import json
 import copy
 
-def generate_abs_rotation(rel_rotation, start_year, end_year, ref_dates):
+def generate_abs_rotation(rel_rotation, start_year, end_year, ref_dates, crops_data):
     "generate absolute dates rotation based on rain season onset"    
-
-    with open("all_crops.json") as all_crops:
-        all_crops = json.load(all_crops)
 
     def next_crop(rotation, index):
         if index == len(rotation) - 1:
@@ -28,10 +25,10 @@ def generate_abs_rotation(rel_rotation, start_year, end_year, ref_dates):
                 if "0000-" in str(v):
                     mystep[k] = v.replace("0000", str(year))
                     if crop_id == "soybean" and mystep["type"] == "AutomaticSowing":
-                        earliest_sowing = date(year, 1, 1) + timedelta(days = sowing_soy - 1)
+                        earliest_sowing = date(year, 1, 1) + timedelta(days=sowing_soy - 1)
                         mystep[k] = mystep[k].replace("09", str.zfill(str(earliest_sowing.month), 2))
                         mystep[k] = mystep[k].replace("15", str.zfill(str(earliest_sowing.day), 2))
-                        mystep["latest-date"] = unicode((earliest_sowing + timedelta(days = 30)).isoformat())
+                        mystep["latest-date"] = unicode((earliest_sowing + timedelta(days=30)).isoformat())
                 if "0001-" in str(v):
                     if not added_year: year +=1
                     added_year = True
@@ -55,7 +52,7 @@ def generate_abs_rotation(rel_rotation, start_year, end_year, ref_dates):
 
         crop_in_rotation, current_index = next_crop(rel_rotation, current_index)
         
-        current_year, cultivation_method = create_cultivation_method(current_year, all_crops[crop_in_rotation], crop_in_rotation, ref_dates[current_year], early_harvest_soy)
+        current_year, cultivation_method = create_cultivation_method(current_year, crops_data[crop_in_rotation], crop_in_rotation, ref_dates[current_year], early_harvest_soy)
 
         rotation_abs_dates.append(cultivation_method)
     
