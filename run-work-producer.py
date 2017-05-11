@@ -27,7 +27,7 @@ import soil_io
 import ascii_io
 from datetime import date, timedelta
 import copy
-from relative_to_abs_ws import generate_abs_rotation
+from absolute_rot_generator import generate_template_abs, rel_to_abs_dates
 import numpy as np
 
 
@@ -120,7 +120,6 @@ def main():
         for filename in os.listdir(path_to_grids):
             year = int(filename.split(".")[0])
             out[year] = ascii_grid_to_np2darray(path_to_grids + "/" + filename)
-            print "created", year
         return out
     
 
@@ -156,7 +155,8 @@ def main():
             env["params"]["siteParameters"]["Latitude"] = latitude
             #site["HeightNN"] = #TODO
             env["params"]["siteParameters"]["SoilProfileParameters"] = profile
-
+    
+    print "loading soil id grid"
     soil_ids = ascii_grid_to_np2darray(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc")
 
     i= 0
@@ -180,10 +180,16 @@ def main():
             cp = rot[i]
             if cp not in crops_data:
                 crops_data[cp] = envs[rot]["cropRotation"][i]
-        
-    #written = False
+
+    written = False
     for p in periods:
+        print ("loading rain onset grids for " + p["name"])
         rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"])
+
+        templates_abs_rot = {}
+        for rot in rotations:
+            templates_abs_rot[rot] = generate_template_abs(rot, p["start_year"], p["end_year"], crops_data)
+
         for row in range(n_rows):            
             for col in range(n_cols):
                 if soil_ids[row, col] == -9999:
@@ -195,9 +201,10 @@ def main():
                 ref_dates = {}
                 for year in range(p["start_year"], p["end_year"] + 1):
                     ref_dates[year] = rain_onset[year][row, col]
+
                 for rot in rotations:
                     env = envs[rot]                    
-                    env["cropRotation"] = generate_abs_rotation(rot, p["start_year"], p["end_year"], ref_dates, crops_data)                    
+                    env["cropRotation"] = rel_to_abs_dates(rot, templates_abs_rot[rot], p["start_year"], p["end_year"], ref_dates)
 
                     #set climate file - read by the server
                     env["csvViaHeaderOptions"] = sim["climate.csv-options"]
@@ -205,10 +212,10 @@ def main():
                     env["csvViaHeaderOptions"]["end-date"] = sim["end-date"]
                     env["pathToClimateCSV"] = PATH_TO_ARCHIV_DIR + "row-" + str(row) + "/col-" + str(col) + ".csv"
 
-                    #if not written:
-                    #    with open("test_env_new.json", "w") as _:
-                    #        _.write(json.dumps(env))
-                    #    written = True
+                    if not written:
+                        with open("test_env_fastest.json", "w") as _:
+                            _.write(json.dumps(env))
+                        written = True
                     
                     rot_id = rot[0] + "_" + rot[1]
                     env["customId"] = p["name"] \
