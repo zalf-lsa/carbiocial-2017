@@ -1,0 +1,3819 @@
+[
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1980-08-31",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1980-09-30",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1981-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1981-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1981-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1981-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1981-09-02",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1981-10-02",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1982-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1982-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1982-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1982-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1982-09-03",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1982-10-03",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1983-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1983-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1983-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1983-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1983-09-04",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1983-10-04",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1984-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1984-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1984-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1984-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1984-09-04",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1984-10-04",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1985-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1985-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1985-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1985-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1985-09-06",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1985-10-06",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1986-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1986-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1986-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1986-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1986-09-07",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1986-10-07",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1987-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1987-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1987-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1987-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1987-09-08",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1987-10-08",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1988-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1988-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1988-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1988-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1988-09-08",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1988-10-08",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1989-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1989-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1989-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1989-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1989-09-10",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1989-10-10",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1990-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1990-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1990-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1990-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1990-09-11",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1990-10-11",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1991-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1991-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1991-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1991-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1991-09-12",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1991-10-12",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1992-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1992-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1992-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1992-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1992-09-12",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1992-10-12",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1993-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1993-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1993-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1993-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1993-09-14",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1993-10-14",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1994-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1994-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1994-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1994-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1994-09-15",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1994-10-15",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1995-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1995-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1995-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1995-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1995-09-16",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1995-10-16",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1996-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1996-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1996-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1996-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1996-09-16",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1996-10-16",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1997-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1997-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1997-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1997-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1997-09-18",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1997-10-18",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1998-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1998-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1998-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1998-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1998-09-19",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1998-10-19",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1999-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1999-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "1999-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "1999-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "1999-09-20",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "1999-10-20",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2000-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2000-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2000-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2000-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2000-09-20",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2000-10-20",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2001-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2001-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2001-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2001-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2001-09-22",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2001-10-22",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2002-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2002-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2002-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2002-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2002-09-23",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2002-10-23",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2003-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2003-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2003-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2003-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2003-09-24",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2003-10-24",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2004-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2004-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2004-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2004-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2004-09-24",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2004-10-24",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2005-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2005-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2005-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2005-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2005-09-26",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2005-10-26",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2006-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2006-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2006-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2006-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2006-09-27",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2006-10-27",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2007-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2007-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2007-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2007-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2007-09-28",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2007-10-28",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2008-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2008-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2008-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2008-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2008-09-28",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2008-10-28",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2009-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2009-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2009-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2009-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2009-09-30",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2009-10-30",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2010-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2010-01-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 80,
+				"crop": [
+					"ref",
+					"crops",
+					"CO"
+				],
+				"base-temp": 0,
+				"latest-date": "2010-02-15",
+				"days-in-temp-window": 5,
+				"max-%-asw": 95,
+				"min-temp": 7,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 0,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					74,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 25,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					55.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 40,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"amount": [
+					27.5,
+					"kg N"
+				],
+				"after": "Sowing",
+				"type": "MineralFertilization",
+				"days": 55,
+				"partition": [
+					"include-from-file",
+					"monica-parameters/mineral-fertilisers/AS.json"
+				]
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2010-09-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	},
+	{
+		"worksteps": [
+			{
+				"max-3d-precip-sum": 2,
+				"earliest-date": "2010-10-01",
+				"min-%-asw": 0,
+				"temp-sum-above-base-temp": 0,
+				"crop": [
+					"ref",
+					"crops",
+					"SOY"
+				],
+				"base-temp": 0,
+				"latest-date": "2010-10-31",
+				"days-in-temp-window": 14,
+				"max-%-asw": 100,
+				"min-temp": 18.5,
+				"type": "AutomaticSowing",
+				"max-curr-day-precip": 0.1
+			},
+			{
+				"max-3d-precip-sum": 2,
+				"min-%-asw": 0,
+				"max-curr-day-precip": 0.1,
+				"harvest-time": "maturity",
+				"max-%-asw": 99,
+				"latest-date": "2011-02-10",
+				"type": "AutomaticHarvest"
+			},
+			{
+				"depth": 0.2,
+				"after": "Harvest",
+				"type": "Tillage",
+				"days": 1
+			}
+		]
+	}
+]

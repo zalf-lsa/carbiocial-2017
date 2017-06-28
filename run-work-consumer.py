@@ -32,263 +32,213 @@ import zmq
 #print zmq.pyzmq_version()
 import monica_io
 import re
+import numpy as np
+#from dateutil.parser import parse
 
+local_run = True
 
-def create_year_output(oids, row, col, rotation, prod_level, values):
-    "create year output lines"
-    row_col = "{}{:03d}".format(row, col)
-    out = []
+USER = "stella"
+
+PATHS = {
+    "stella": {
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/stella/Documents/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "Z:/projects/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/Users/stella/Documents/GitHub/carbiocial-2017/"
+    }
+}
+
+#def to_doy(string):
+#    try: 
+#        my_date = parse(string)
+#        tt = my_date.timetuple()
+#        return tt.tm_yday
+#    except ValueError:
+#        return False
+
+def update_temporary_output(tmp_data, values, orig_spec, oids, row, col, rot):
+    "update temporary output data structure"
     if len(values) > 0:
+        #check for crop/year index in oids
+        for iii in range(0, len(oids)):
+            oid = oids[iii]
+            if oid["displayName"] != "":
+                oid_name = oid["displayName"]
+            else:
+                oid_name = oid["name"]
+            if oid_name == "Year":
+                year_index = iii
+            elif oid_name == "Crop":
+                crop_index = iii
+            
         for kkk in range(0, len(values[0])):
-            vals = {}
             for iii in range(0, len(oids)):
                 oid = oids[iii]
                 val = values[iii][kkk]
-                if iii == 1:
-                    vals[oid["name"]] = (values[iii+1][kkk] - val) / val if val > 0 else 0.0
-                elif iii == 2:
-                    continue
-                else:
-                    if isinstance(val, types.ListType):
-                        for val_ in val:
-                            vals[oid["name"]] = val_
-                    else:
-                        vals[oid["name"]] = val
-
-            if vals.get("Year", 0) > 1982:
-                out.append([
-                    row_col,
-                    rotation,
-                    prod_level,
-                    vals.get("Year", "NA"),
-                    vals.get("SOC", "NA"),
-                    vals.get("Rh", "NA"),
-                    vals.get("NEP", "NA"),
-                    vals.get("Act_ET", "NA"),
-                    vals.get("Act_Ev", "NA"),
-                    vals.get("PercolationRate", "NA"),
-                    vals.get("Irrig", "NA"),
-                    vals.get("NLeach", "NA"),
-                    vals.get("ActNup", "NA"),
-                    vals.get("NFert", "NA"),
-                    vals.get("N2O", "NA")
-                ])
-
-    return out
-
-
-def create_crop_output(oids, row, col, rotation, prod_level, values):
-    "create crop output lines"
-    row_col = "{}{:03d}".format(row, col)
-    out = []
-    if len(values) > 0:
-        for kkk in range(0, len(values[0])):
-            vals = {}
-            for iii in range(0, len(oids)):
-                oid = oids[iii]
-                val = values[iii][kkk]
-                if iii == 2:
-                    start = datetime.strptime(val, "%Y-%m-%d")
-                    end = datetime.strptime(values[iii+1][kkk], "%Y-%m-%d")
-                    vals[oid["name"]] = (end - start).days
-                elif iii == 3:
-                    continue
-                elif iii == 4:
-                    vals[oid["name"]] = (values[iii+1][kkk] - val) / val if val > 0 else 0.0
-                elif iii == 5:
-                    continue
-                else:
-                    if isinstance(val, types.ListType):
-                        for val_ in val:
-                            vals[oid["name"]] = val_
-                    else:
-                        vals[oid["name"]] = val
-
-            if vals.get("Year", 0) > 1982:
-                out.append([
-                    row_col,
-                    rotation,
-                    vals.get("Crop", "NA").replace("/", "_").replace(" ", "-"),
-                    prod_level,
-                    vals.get("Year", "NA"),
-                    vals.get("Date", "NA"),
-                    vals.get("SOC", "NA"),
-                    vals.get("Rh", "NA"),
-                    vals.get("NEP", "NA"),
-                    vals.get("Yield", "NA"),
-                    vals.get("AbBiom", "NA"),
-                    vals.get("LAI", "NA"),
-                    vals.get("Stage", "NA"),
-                    vals.get("RelDev", "NA"),
-                    vals.get("Act_ET", "NA"),
-                    vals.get("Act_Ev", "NA"),
-                    vals.get("PercolationRate", "NA"),
-                    vals.get("Irrig", "NA"),
-                    vals.get("NLeach", "NA"),
-                    vals.get("ActNup", "NA"),
-                    vals.get("NFert", "NA"),
-                    vals.get("N2O", "NA"),
-                    vals.get("Nstress", "NA"),
-                    vals.get("TraDef", "NA")
-                ])
-
-    return out
-
-def update_pheno_output(oids, row, col, rotation, prod_level, values, pheno_data, region_id):
-    "create phenological related output lines"
-    row_col = "{}{:03d}".format(row, col)
-    if len(values) > 0:
-        for kkk in range(0, len(values[0])):
-            vals = {}
-            for iii in range(0, len(oids)):
-                oid = oids[iii]
-                val = values[iii][kkk]
+                year = values[year_index][kkk]
+                crop = values[crop_index][kkk]
                 if oid["displayName"] != "":
                     oid_name = oid["displayName"]
                 else:
                     oid_name = oid["name"]
-                #oid_name = oid["displayName"] if oid["displayName"] != "" else oid_name = oid["name"]
-                if isinstance(val, types.ListType):
-                    for val_ in val:
-                        vals[oid_name] = val_
-                else:
-                    vals[oid_name] = val
-            pheno_data[region_id][vals.get("Crop")][vals.get("Year")].update(vals)
-
-def write_data(region_id, year_data, crop_data, pheno_data):
-    "write data"
-
-    path_to_crop_file = "out/" + str(region_id) + "_crop.csv"
-    path_to_year_file = "out/" + str(region_id) + "_year.csv"
-    path_to_pheno_file = "out/" + str(region_id) + "_pheno.csv"
-
-    if not os.path.isfile(path_to_year_file):
-        with open(path_to_year_file, "w") as _:
-            _.write("ID.cell,rotation,prod.level,year,delta.OC,CO2.emission,NEP,ET,EV,water.perc,irr,N.leach,N.up,N.fert,N2O.em\n")
-
-    with open(path_to_year_file, 'ab') as _:
-        writer = csv.writer(_, delimiter=",")
-        for row_ in year_data[region_id]:
-            writer.writerow(row_)
-        year_data[region_id] = []
-
-    if not os.path.isfile(path_to_crop_file):
-        with open(path_to_crop_file, "w") as _:
-            _.write("ID.cell,rotation,crop,prod.level,year,cycle.length,delta.OC,CO2.emission,NEP,yield,agb,LAImax,Stage.harv,RelDev,ET,EV,water.perc,irr,N.leach,N.up,N.min.fert,N2O.em,N.stress,Wstress\n")
-
-    with open(path_to_crop_file, 'ab') as _:
-        writer = csv.writer(_, delimiter=",")
-        for row_ in crop_data[region_id]:
-            writer.writerow(row_)
-        crop_data[region_id] = []
-    
-    #if not os.path.isfile(path_to_pheno_file):
-    #    with open(path_to_pheno_file, "w") as _:
-    #        _.write("crop,year,anthesis,maturity,harvest\n")
-
-    #with open(path_to_pheno_file, 'ab') as _:
-    #    writer = csv.writer(_, delimiter=",")
-    #    for crop in pheno_data[region_id]:
-    #        for year in pheno_data[region_id][crop]:
-    #           row = [    
-    #                crop,
-    #                year,
-    #                pheno_data[region_id][crop][year].get("anthesis", "NA"),
-    #                pheno_data[region_id][crop][year].get("maturity", "NA"),
-    #                pheno_data[region_id][crop][year].get("harvest", "NA")
-    #            ]
-    #            writer.writerow(row)
-    #    pheno_data.clear()
-    pheno_data.clear() 
-
+                if oid_name != "Year" and oid_name != "Crop":
+                    tmp_data[rot][row][col][year][crop][oid_name] = val
 
 def collector():
     "collect data from workers"
 
-    year_data = defaultdict(list)
-    crop_data = defaultdict(list)
-    pheno_data = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
+    n_rows = 2545
+    n_cols = 1928
+
+    def identify_cells_with_data(path_to_file):
+        "0=row, 1=col"
+        with open(path_to_file) as file_:
+            for header in range(0, 6):
+                file_.next()
+            out = np.empty((n_rows, n_cols), np.dtype(int))
+            r = 0
+            for line in file_:
+                c = 0
+                for val in line.split(' '):
+                    if val != "-9999" and val != "-9999\n":
+                        out[r, c] = 1
+                    c = c + 1
+                r = r + 1
+            return out
+    
+    print("loading template for output...")
+    cells_with_data = identify_cells_with_data(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc")
+    cells_per_row = np.sum(cells_with_data, axis=1).tolist()
+    print("load complete")
+    
+    #keys: tmp_data[rot][row][col][year][crop][oid_name]
+    temp_out_data = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(dict))))))
 
     i = 0
     context = zmq.Context()
     socket = context.socket(zmq.PULL)
-    socket.connect("tcp://cluster2:7777")
+    if local_run:
+        socket.connect("tcp://localhost:7777")
+    else:
+        socket.connect("tcp://cluster2:7777")    
     socket.RCVTIMEO = 1000
     leave = False
-    write_normal_output_files = False
-    start_writing_lines_threshold = 1000
+    write_line = {}
+    grid_created = False
+    
     while not leave:
-
         try:
             result = socket.recv_json()
         except:
-            for region_id in year_data.keys():
-                if len(year_data[region_id]) > 0:
-                    write_data(region_id, year_data, crop_data, pheno_data)
             continue
 
         if result["type"] == "finish":
             print "received finish message"
             leave = True
 
-        elif not write_normal_output_files:
-            print "received work result ", i, " customId: ", result.get("customId", ""), " len(year_data): ", len((year_data.values()[:1] or [[]])[0])
+        else:
+            print "received work result ", i, " customId: ", result.get("customId", "")
 
             custom_id = result["customId"]
             ci_parts = custom_id.split("|")
-            rotation = ci_parts[0]
-            prod_level = ci_parts[1]
-            row_, col_ = ci_parts[3][1:-1].split("/")
-            row, col = (int(row_), int(col_))
-            region_id = ci_parts[4]
+            period = ci_parts[0]
+            row = int(ci_parts[1])
+            col = int(ci_parts[2])
+            rotation = ci_parts[3]
+            
+            if rotation not in write_line.keys():
+                write_line[rotation] = 0
 
             for data in result.get("data", []):
                 results = data.get("results", [])
                 orig_spec = data.get("origSpec", "")
                 output_ids = data.get("outputIds", [])
                 if len(results) > 0:
-                    if orig_spec == '"yearly"':
-                        res = create_year_output(output_ids, row, col, rotation, prod_level, results)
-                        year_data[region_id].extend(res)
-                    elif orig_spec == '"crop"':
-                        res = create_crop_output(output_ids, row, col, rotation, prod_level, results)
-                        crop_data[region_id].extend(res)
-                    if re.search('anthesis', orig_spec) or re.search('maturity', orig_spec) or re.search('Harvest', orig_spec):
-                        update_pheno_output(output_ids, row, col, rotation, prod_level, results, pheno_data, region_id)
+                    #print len(results[0])
+                    update_temporary_output(temp_out_data, results, orig_spec, output_ids, row, col, rotation)
+            
+            def add_line_grid(tmp_data, rot, write_line, cells_with_data, grid_fileinfo, copy_row=False):
 
+                def append_line(filename, out_row):
+                    with(open(filename, "a")) as _:
+                        _.write(out_row)
 
-            for region_id in year_data.keys():
-                if len(year_data[region_id]) > start_writing_lines_threshold:
-                    write_data(region_id, year_data, crop_data, pheno_data)
+                out_row = ""
+                row = write_line[rot]
+                if copy_row:
+                    for value in cells_with_data[row]:
+                        out_row += str(value) + " "
+                        out_row = out_row.replace("0", "-9999")
+                    for grid_file in grid_fileinfo[rot]:
+                        append_line(grid_file["name"], out_row)
+                else:
+                    for grid_file in grid_fileinfo[rot]:
+                        yr = grid_file["props"][0]
+                        cp = grid_file["props"][1]
+                        out_var = grid_file["props"][2]
+                        for col in range(len(cells_with_data[row])):
+                            if cells_with_data[row][col] == 0:
+                                out_row += "-9999" + " "
+                            else:
+                                #tmp_data[rot][row][col][year][crop][oid_name]
+                                try:
+                                    if tmp_data[rot][row][col][yr][cp][out_var] == {}:
+                                        print ("!!!!!!!!MISSING " + str(rot) + " " + str(row) + " " + str(col) + " " + str(yr) + " " + str(cp) + " " + str(out_var))
+                                        out_row += "-9999" + " " #if for unknown reason the data is not there
+                                    else:
+                                        out_row += str(tmp_data[rot][row][col][yr][cp][out_var]) + " "
+                                except:
+                                    print 'MISSING DATA in rotation: {0} row: {1} col: {2} year: {3} crop: {4} output: {5}'.format(str(rot), str(row), str(col), str(yr), str(cp), str(out_var))
+                                    out_row += "-9999" + " " #if for any reason the data is not there (e.g., stage not reached)
+                        append_line(grid_file["name"], out_row)     
+                    tmp_data[rot][row].clear() #save memory for next rows :)
+                print 'added row {0} to files of rotation {1}'.format(str(row), str(rot))
+
+            def write_line_check(write_line, tmp_data, cells_per_row, cells_with_data, grid_fileinfo):
+                #tmp_data[rot][row][col][year][crop][oid_name]
+                for rot in tmp_data.keys():
+                    try:
+                        row = write_line[rot]
+                        n_cols = cells_per_row[row]
+                        if n_cols == 0:
+                            #copy from template
+                            add_line_grid(tmp_data, rot, write_line, cells_with_data, grid_fileinfo, copy_row=True)
+                            write_line[rot] += 1 #row
+                            write_line_check(write_line, tmp_data, cells_per_row, cells_with_data, grid_fileinfo)
+                        elif n_cols == len(tmp_data[rot][row]):
+                            #fill template with available data
+                            add_line_grid(tmp_data, rot, write_line, cells_with_data, grid_fileinfo, copy_row=False)
+                            write_line[rot] += 1 #row
+                            write_line_check(write_line, tmp_data, cells_per_row, cells_with_data, grid_fileinfo)
+                    except IndexError:
+                        print "time to check output maps for " + rot + " !"
+            
+            def create_retrieve_grid_files(tmp_data, period):
+                #tmp_data[rot][row][col][year][crop][oid_name]
+                header = """ncols         1928\nnrows         2545\nxllcorner     -9345.000000\nyllcorner     8000665.000000\ncellsize      900\nNODATA_value  -9999\n"""
+                file_info = {rot: [] for rot in tmp_data.keys()}
+                for rot in tmp_data.keys():
+                    any_row = tmp_data[rot].keys()[0]
+                    any_col = tmp_data[rot][any_row].keys()[0]
+                    for yr in tmp_data[rot][any_row][any_col].keys():
+                        for cp in tmp_data[rot][any_row][any_col][yr]:
+                            cp_id = cp.replace("/", "") #avoid problems with out file name
+                            cp_id = cp_id.replace(" ", "")
+                            for out_var in tmp_data[rot][any_row][any_col][yr][cp]:
+                                out_file = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] +"out_grids/" + period + "/" + cp_id + "_in_" + rot + "_" + out_var + "_" + str(yr) + ".asc"
+                                file_info[rot].append({"name": out_file, "props": [yr, cp, out_var]})
+                                with(open(out_file, "w")) as _:
+                                    #header
+                                    _.write(header)
+                return True, file_info
+                
+
+            if i > 50: #wait to be sure that all the rotations are represented in temp_out_data
+                if not grid_created:
+                    grid_created, grid_fileinfo = create_retrieve_grid_files(temp_out_data, period)
+                write_line_check(write_line, temp_out_data, cells_per_row, cells_with_data, grid_fileinfo)
+
 
             i = i + 1
-
-        elif write_normal_output_files:
-            print "received work result ", i, " customId: ", result.get("customId", "")
-
-            with open("out/out-" + str(i) + ".csv", 'wb') as _:
-                writer = csv.writer(_, delimiter=",")
-
-                for data in result.get("data", []):
-                    results = data.get("results", [])
-                    orig_spec = data.get("origSpec", "")
-                    output_ids = data.get("outputIds", [])
-
-                    if len(results) > 0:
-                        writer.writerow([orig_spec])
-                        for row in monica_io.write_output_header_rows(output_ids,
-                                                                      include_header_row=True,
-                                                                      include_units_row=True,
-                                                                      include_time_agg=False):
-                            writer.writerow(row)
-
-                        for row in monica_io.write_output(output_ids, results):
-                            writer.writerow(row)
-
-                    writer.writerow([])
-
-            i = i + 1
-
 
 collector()
 

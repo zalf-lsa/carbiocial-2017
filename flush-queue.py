@@ -22,7 +22,7 @@ import sys
 import zmq
 #print "pyzmq version: ", zmq.pyzmq_version(), " zmq version: ", zmq.zmq_version()
 
-LOCAL_RUN = False
+LOCAL_RUN = True
 
 def main():
     "simply empty queue"
@@ -37,7 +37,8 @@ def main():
     i = 0
     while True:
         socket.recv_json(encoding="latin-1")
-        print i,
+        if i%10 == 0:
+            print i,
         i = i + 1
 
 main()

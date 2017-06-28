@@ -55,10 +55,10 @@
             "name": "Integrated Terminal/Console",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
+            "stopOnEntry": false,
             "pythonPath": "${config.python.pythonPath}",
             "program": "${file}",
-            "cwd": "null",
+            "cwd": "${workspaceRoot}",
             "console": "integratedTerminal",
             "debugOptions": [
                 "WaitOnAbnormalExit",
