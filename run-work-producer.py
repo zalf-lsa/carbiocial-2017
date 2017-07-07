@@ -7,6 +7,7 @@
 
 # Authors:
 # Michael Berg-Mohnicke <michael.berg@zalf.de>
+# Tommaso Stella <tommaso.stella@zalf.de>
 #
 # Maintainers:
 # Currently maintained by the authors.
@@ -30,15 +31,20 @@ import copy
 from absolute_rot_generator import generate_template_abs, rel_to_abs_dates
 import numpy as np
 
-local_run = True
 
-USER = "stella"
+
+USER = "berg-xps15"
 
 PATHS = {
     "stella": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/stella/Documents/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "Z:/projects/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/Users/stella/Documents/GitHub/carbiocial-2017/"
+    },
+    "berg-xps15": {
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/"
     }
 }
 
@@ -49,13 +55,22 @@ start_send = time.clock()
 def main():
     "main function"
 
+    config = {
+        "port": 6666
+    }
+    if len(sys.argv) > 1:
+        for arg in sys.argv[1:]:
+            k,v = arg.split("=")
+            if k in config:
+                config[k] = int(v) 
+
+    local_run = False
     context = zmq.Context()
     socket = context.socket(zmq.PUSH)
-    port = 6666 if len(sys.argv) == 1 else sys.argv[1]
     if local_run:
-        socket.connect("tcp://localhost:" + str(port))
+        socket.connect("tcp://localhost:" + str(config["port"]))
     else:
-        socket.connect("tcp://cluster2:" + str(port))
+        socket.connect("tcp://cluster2:" + str(config["port"]))
     
 
     soil_db_con = sqlite3.connect(PATHS[USER]["LOCAL_PATH_TO_REPO"] + "soil-carbiocial.sqlite")
@@ -81,7 +96,7 @@ def main():
             "start_year": 1981,
             "end_year": 1984, #TODO 2012
             "climate_folder": "climate-data-years-1981-2012-rows-0-2544"
-        },
+        }, 
         {
             "name": "future_wrf",
             "start_year": 2013,
@@ -120,7 +135,7 @@ def main():
                     c = c + 1
                 r = r + 1
             return out
-    
+
     def grids_to_3darrays(path_to_grids):
         "key=year, 0=row, 1=col"
         out = {}
@@ -128,7 +143,6 @@ def main():
             year = int(filename.split(".")[0])
             out[year] = ascii_grid_to_np2darray(path_to_grids + "/" + filename)
         return out
-    
 
     profile_cache = {}
     latitude_cache = {}
@@ -157,17 +171,17 @@ def main():
             profile_cache[profile_id] = profile
             latitude = lat(soil_db_con, profile_id)
             latitude_cache[profile_id] = latitude
-        
+
         for env in envs.itervalues():
             env["params"]["siteParameters"]["Latitude"] = latitude
             #site["HeightNN"] = #TODO
             env["params"]["siteParameters"]["SoilProfileParameters"] = profile
-    
+
     print "loading soil id grid"
     soil_ids = ascii_grid_to_np2darray(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc")
 
-    i= 0
-    
+    i = 0
+ 
     #create an env for each rotation (templates, customized within the loop)
     crops_data = {}
     envs = {}
@@ -177,11 +191,11 @@ def main():
             my_rot.append(all_crops[cp])
         crop["cropRotation"] = my_rot
         envs[rot] = monica_io.create_env_json_from_json_config({
-                            "crop": crop,
-                            "site": site,
-                            "sim": sim,
-                            "climate": ""
-                        })
+            "crop": crop,
+            "site": site,
+            "sim": sim,
+            "climate": ""
+        })
 
         for i in range(len(rot)):
             cp = rot[i]
@@ -241,8 +255,8 @@ def main():
                     print "sent env ", i, " customId: ", env["customId"]
                     i += 1
 
-                    if i == 1500: #fo test purposes
-                        return
+                    #if i > 150: #fo test purposes
+                    #    return
 
     stop_send = time.clock()
 
