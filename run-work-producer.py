@@ -50,7 +50,6 @@ PATHS = {
 
 PATH_TO_ARCHIV_DIR = "/archiv-daten/md/projects/carbiocial/"
 #PATH_TO_ARCHIV_DIR = "Z:/projects/carbiocial/"
-start_send = time.clock()
 
 def main():
     "main function"
@@ -202,7 +201,7 @@ def main():
             if cp not in crops_data:
                 crops_data[cp] = envs[rot]["cropRotation"][i]
 
-    #written = False
+    start_send = time.clock()
     for p in periods:
         if p["name"] != run_period:
             #run one period at a time in order to simplify logic in the consumer!
@@ -240,11 +239,6 @@ def main():
                     else:
                         env["pathToClimateCSV"] = PATH_TO_ARCHIV_DIR + p["climate_folder"] + "/" + "row-" + str(row) + "/col-" + str(col) + ".asc" 
 
-                    #if not written:
-                    #    with open("test_env_bug" + str(i) + ".json", "w") as _:
-                    #        _.write(json.dumps(env))
-                    #    written = True
-                    
                     rot_id = rot[0] + "_" + rot[1]
                     env["customId"] = p["name"] \
                                         + "|" + str(row) \
@@ -261,6 +255,7 @@ def main():
     stop_send = time.clock()
 
     print "sending ", i, " envs took ", (stop_send - start_send), " seconds"
+    
 
 main()
 

@@ -7,6 +7,7 @@
 
 # Authors:
 # Michael Berg-Mohnicke <michael.berg@zalf.de>
+# Tommaso Stella <tommaso.stella@zalf.de>
 #
 # Maintainers:
 # Currently maintained by the authors.
@@ -16,9 +17,6 @@
 # Copyright (C: Leibniz Centre for Agricultural Landscape Research (ZALF)
 
 import sys
-#sys.path.insert(0, "C:\\Users\\berg.ZALF-AD\\GitHub\\monica\\project-files\\Win32\\Release")
-#sys.path.insert(0, "C:\\Users\\berg.ZALF-AD\\GitHub\\monica\\src\\python")
-#print sys.path
 
 #import ascii_io
 #import json
@@ -35,7 +33,7 @@ import re
 import numpy as np
 #from dateutil.parser import parse
 
-
+import total_size as ts
 
 USER = "berg-xps15"
 
@@ -119,7 +117,7 @@ cellsize      900
 NODATA_value  -9999
 """
 
-
+#@profile
 def write_row_to_grids(all_data, template_grid, row, rotation, period, insert_nodata_rows_count):
     "write grids row by row"
 
@@ -157,7 +155,6 @@ def write_row_to_grids(all_data, template_grid, row, rotation, period, insert_no
                     for key, val in output_grids.iteritems():
                         val[year][crop][col] = data.get(key, -9999)
 
-
     for key, y2c2d in output_grids.iteritems():
         
         for year, c2d in y2c2d.iteritems():
@@ -180,8 +177,8 @@ def write_row_to_grids(all_data, template_grid, row, rotation, period, insert_no
                     rowstr = " ".join(map(lambda x: "-9999" if int(x) == -9999 else str(x), row_arr))
                     _.write(rowstr +  "\n")
     
-    all_data[row].clear()
-
+    #all_data[row].clear()
+    #del all_data[row]
 
 
 def main():
@@ -215,10 +212,10 @@ def main():
     datacells_per_row = np.sum(template_grid, axis=1) #.tolist()
     print("load complete")
 
-    rot_to_row_to_col_to_data = defaultdict(lambda: defaultdict(dict))
-    rot_to_row_to_datacell_count = {}
-    next_row = 0
-    insert_nodata_rows_count = {}
+    period_to_rotation_to_row_to_col_to_data = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
+    period_to_rotation_to_row_to_datacell_count = defaultdict(lambda: defaultdict(lambda: datacells_per_row.copy()))
+    period_to_rotation_to_next_row = defaultdict(lambda: defaultdict(lambda: 0))
+    period_to_rotation_to_insert_nodata_rows_count = defaultdict(lambda: defaultdict(lambda: 0))
 
     while not leave:
         try:
@@ -231,8 +228,6 @@ def main():
             leave = True
 
         else:
-            print "received work result ", i, " customId: ", result.get("customId", "")
-
             custom_id = result["customId"]
             ci_parts = custom_id.split("|")
             period = ci_parts[0]
@@ -240,25 +235,33 @@ def main():
             col = int(ci_parts[2])
             rotation = ci_parts[3]
 
-            if rotation not in rot_to_row_to_col_to_data:
-                rot_to_row_to_datacell_count[rotation] = datacells_per_row.copy()
-                insert_nodata_rows_count[rotation] = 0
+            print "received work result", i, "customId:", result.get("customId", ""), "size:",len(period_to_rotation_to_row_to_col_to_data[period][rotation])
 
-            rot_to_row_to_col_to_data[rotation][row][col] = create_output(result)
-            rot_to_row_to_datacell_count[rotation][row] -= 1
-            
-            for rot, row_to_datacell_count in rot_to_row_to_datacell_count.iteritems():
-                while row_to_datacell_count[next_row] == 0:
-                    # if rows have been initially completely nodata, remember to write these rows before the next row with some data
-                    if datacells_per_row[next_row] == 0:
-                        insert_nodata_rows_count[rot] += 1
-                    else:
-                        write_row_to_grids(rot_to_row_to_col_to_data[rot], template_grid, next_row, rotation, period, insert_nodata_rows_count[rot])
-                        insert_nodata_rows_count[rot] = 0 # should have written the nodata rows for this rotation
-                    
-                    next_row += 1 # move to next row (to be written)
+            period_to_rotation_to_row_to_col_to_data[period][rotation][row][col] = create_output(result)
+            period_to_rotation_to_row_to_datacell_count[period][rotation][row] -= 1
+
+            for per, rotation_to_row_to_datacell_count in period_to_rotation_to_row_to_datacell_count.iteritems():
+                for rot, row_to_datacell_count in rotation_to_row_to_datacell_count.iteritems():
+                    next_row = period_to_rotation_to_next_row[per][rot]
+                    while row_to_datacell_count[next_row] == 0:
+                        # if rows have been initially completely nodata, remember to write these rows before the next row with some data
+                        if datacells_per_row[next_row] == 0:
+                            period_to_rotation_to_insert_nodata_rows_count[per][rot] += 1
+                        else:
+                            print "writing ",per,rot,"row:", next_row, "-----------------------------------"
+                            print "before size:",len(period_to_rotation_to_row_to_col_to_data[per][rot])
+                            write_row_to_grids(period_to_rotation_to_row_to_col_to_data[per][rot], template_grid, next_row, rotation, period, period_to_rotation_to_insert_nodata_rows_count[per][rot])
+                            x = period_to_rotation_to_row_to_col_to_data[per][rot]
+                            del x[row]
+                            print "after size:",len(period_to_rotation_to_row_to_col_to_data[per][rot])
+                            period_to_rotation_to_insert_nodata_rows_count[per][rot] = 0 # should have written the nodata rows for this period and rotation
+                        
+                        period_to_rotation_to_next_row[per][rot] += 1 # move to next row (to be written)
 
             i = i + 1
+
+            #if i > 5000:
+            #    return
 
 
 main()
