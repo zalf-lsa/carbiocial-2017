@@ -32,7 +32,6 @@ from absolute_rot_generator import generate_template_abs, rel_to_abs_dates
 import numpy as np
 
 
-
 USER = "berg-xps15"
 
 PATHS = {
