@@ -32,7 +32,7 @@ from absolute_rot_generator import generate_template_abs, rel_to_abs_dates
 import numpy as np
 
 
-USER = "berg-xps15"
+USER = "stella"
 
 PATHS = {
     "stella": {
@@ -92,12 +92,12 @@ def main():
         {
             "name": "historical",
             "start_year": 1981,
-            "end_year": 1984, #TODO 2012
+            "end_year": 2012,
             "climate_folder": "climate-data-years-1981-2012-rows-0-2544"
         }, 
         {
             "name": "future_wrf",
-            "start_year": 2013,
+            "start_year": 2001,
             "end_year": 2040,
             "climate_folder": "climate-data-years-2001-2040-rows-0-2544"
         },
@@ -109,7 +109,7 @@ def main():
         }
     ]
 
-    run_period = "historical"
+    #run_period = "historical"
 
     rotations = [
         ("soybean", "cotton"),
@@ -119,14 +119,17 @@ def main():
     n_rows = 2544
     n_cols = 1928
 
-    def ascii_grid_to_np2darray(path_to_file):
+    def ascii_grid_to_np2darray(path_to_file, skipheader=True):
         "0=row, 1=col"
         with open(path_to_file) as file_:
-            for header in range(0, 6):
-                file_.next()
+            if skipheader:
+                for header in range(0, 6):
+                    file_.next()
             out = np.empty((n_rows, n_cols), np.dtype(int))
             r = 0
             for line in file_:
+                if r == n_rows:
+                    break
                 c = 0
                 for val in line.split(' '):
                     out[r, c] = int(val)
@@ -134,12 +137,13 @@ def main():
                 r = r + 1
             return out
 
-    def grids_to_3darrays(path_to_grids):
+    def grids_to_3darrays(path_to_grids, skipheader=True):
         "key=year, 0=row, 1=col"
         out = {}
         for filename in os.listdir(path_to_grids):
-            year = int(filename.split(".")[0])
-            out[year] = ascii_grid_to_np2darray(path_to_grids + "/" + filename)
+            print("loading " + filename)
+            year = int(filename.split("_")[0])
+            out[year] = ascii_grid_to_np2darray(path_to_grids + "/" + filename, skipheader)
         return out
 
     profile_cache = {}
@@ -202,11 +206,11 @@ def main():
 
     start_send = time.clock()
     for p in periods:
-        if p["name"] != run_period:
-            #run one period at a time in order to simplify logic in the consumer!
-            continue
+        #if p["name"] != run_period:
+        #    #run one period at a time in order to simplify logic in the consumer!
+        #    continue
         print ("loading rain onset grids for " + p["name"])
-        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"])
+        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], False)
 
         templates_abs_rot = {}
         for rot in rotations:
