@@ -116,7 +116,7 @@ def main():
         ("soybean", "maize")
     ]
 
-    n_rows = 2545
+    n_rows = 2544
     n_cols = 1928
 
     def ascii_grid_to_np2darray(path_to_file):
@@ -167,7 +167,7 @@ def main():
         else:
             profile = soil_io.soil_parameters(soil_db_con, profile_id)
             profile_cache[profile_id] = profile
-            latitude = lat(soil_db_con, profile_id)
+            latitude = lat(soil_db_con, profile_id) #TODO calculate latitude based on the row?
             latitude_cache[profile_id] = latitude
 
         for env in envs.itervalues():
