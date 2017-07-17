@@ -31,15 +31,21 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-xps15"
+USER = "hampf"
 
 PATHS = {
+    "hampf": {
+        "INCLUDE_FILE_BASE_PATH": "C:/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "Z:/md/projects/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/GitHub/carbiocial-2017/"
+    },
+
     "stella": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/stella/Documents/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "Z:/projects/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/Users/stella/Documents/GitHub/carbiocial-2017/"
-    }
-    ,
+    },
+
     "berg-xps15": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
@@ -126,25 +132,25 @@ def write_row_to_grids(data_, template_grid, rotation, period):
     make_dict_dict_nparr = lambda: defaultdict(lambda: defaultdict(lambda: np.full((cols,), -9999, dtype=np.float)))
 
     output_grids = {
-        "sowing": make_dict_dict_nparr(),
-        "harvest": make_dict_dict_nparr(),
-        "Yield": make_dict_dict_nparr(),
-        "Nstressavg": make_dict_dict_nparr(),
-        "TraDefavg": make_dict_dict_nparr(),
-        "anthesis": make_dict_dict_nparr(),
-        "matur": make_dict_dict_nparr(),
-        "Nstress1": make_dict_dict_nparr(),
-        "TraDef1": make_dict_dict_nparr(),
-        "Nstress2": make_dict_dict_nparr(),
-        "TraDef2": make_dict_dict_nparr(),
-        "Nstress3": make_dict_dict_nparr(),
-        "TraDef3": make_dict_dict_nparr(),
-        "Nstress4": make_dict_dict_nparr(),
-        "TraDef4": make_dict_dict_nparr(),
-        "Nstress5": make_dict_dict_nparr(),
-        "TraDef5": make_dict_dict_nparr(),
-        "Nstress6": make_dict_dict_nparr(),
-        "TraDef6": make_dict_dict_nparr()
+        "sowing": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "harvest": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "Yield": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 2},
+        "Nstressavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "TraDefavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "anthesis": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "matur": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "Nstress1": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "TraDef1": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "Nstress2": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "TraDef2": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "Nstress3": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "TraDef3": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "Nstress4": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "TraDef4": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "Nstress5": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "TraDef5": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "Nstress6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "TraDef6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4}
     }
 
     for col in xrange(0, cols):
@@ -152,16 +158,25 @@ def write_row_to_grids(data_, template_grid, rotation, period):
             for year, crop_to_data in row_col_data[row][col].iteritems():
                 for crop, data in crop_to_data.iteritems():
                     for key, val in output_grids.iteritems():
-                        val[year][crop][col] = data.get(key, -9999)
+                        val["data"][year][crop][col] = data.get(key, -9999)
 
-    for key, y2c2d in output_grids.iteritems():
+    for key, y2c2d_ in output_grids.iteritems():
         
+        y2c2d = y2c2d_["data"]
+        cast_to = y2c2d_["cast-to"]
+        digits = y2c2d_["digits"]
+        if cast_to == "int":
+            mold = lambda x: str(int(x))
+        else:
+            mold = lambda x: str(round(x, digits))
+
         for year, c2d in y2c2d.iteritems():
 
             for crop, row_arr in c2d.iteritems():
             
                 crop = crop.replace("/", "").replace(" ", "")
-                path_to_file = "out/" + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(year) + ".asc"
+                #path_to_file = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "out_grids/" + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(year) + ".asc"
+                path_to_file = "D:/out_carbiocial/" + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(year) + ".asc"
 
                 if not os.path.isfile(path_to_file):
                     with open(path_to_file, "w") as _:
@@ -173,7 +188,7 @@ def write_row_to_grids(data_, template_grid, rotation, period):
                             rowstr = " ".join(map(lambda x: "-9999", row_template))
                             _.write(rowstr +  "\n")
 
-                    rowstr = " ".join(map(lambda x: "-9999" if int(x) == -9999 else str(x), row_arr))
+                    rowstr = " ".join(map(lambda x: "-9999" if int(x) == -9999 else mold(x), row_arr))
                     _.write(rowstr +  "\n")
     
     del row_col_data[row]

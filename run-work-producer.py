@@ -32,9 +32,14 @@ from absolute_rot_generator import generate_template_abs, rel_to_abs_dates
 import numpy as np
 
 
-USER = "stella"
+USER = "hampf"
 
 PATHS = {
+    "hampf": {
+        "INCLUDE_FILE_BASE_PATH": "C:/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "Z:/md/projects/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/GitHub/carbiocial-2017/"
+    },
     "stella": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/stella/Documents/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "Z:/projects/carbiocial/",
@@ -109,7 +114,7 @@ def main():
         }
     ]
 
-    #run_period = "historical"
+    run_period = "historical"
 
     rotations = [
         ("soybean", "cotton"),
@@ -137,12 +142,14 @@ def main():
                 r = r + 1
             return out
 
-    def grids_to_3darrays(path_to_grids, skipheader=True):
+    def grids_to_3darrays(path_to_grids, start_year, end_year, skipheader=True):
         "key=year, 0=row, 1=col"
         out = {}
         for filename in os.listdir(path_to_grids):
-            print("loading " + filename)
             year = int(filename.split("_")[0])
+            if int(year) < start_year or int(year) > end_year:
+                continue
+            print("loading " + filename)
             out[year] = ascii_grid_to_np2darray(path_to_grids + "/" + filename, skipheader)
         return out
 
@@ -206,11 +213,10 @@ def main():
 
     start_send = time.clock()
     for p in periods:
-        #if p["name"] != run_period:
-        #    #run one period at a time in order to simplify logic in the consumer!
-        #    continue
+        if p["name"] != run_period:
+            continue
         print ("loading rain onset grids for " + p["name"])
-        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], False)
+        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], p["start_year"], p["end_year"], False)
 
         templates_abs_rot = {}
         for rot in rotations:

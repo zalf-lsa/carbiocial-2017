@@ -11,7 +11,7 @@
 			"is-winter-crop": false,
 			"cropParams": {
 				"species": ["include-from-file", "monica-parameters/projects/carbiocial/soybean.json"],
-				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/soybean-VII.json"]
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/VIII.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/soybean.json"]
 		},
@@ -19,7 +19,7 @@
 			"is-winter-crop": false,
 			"cropParams": {
 				"species": ["include-from-file", "monica-parameters/projects/carbiocial/maize.json"],
-				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/grain-maize.json"]
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/grain-maize-Pioneer-30K75.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/maize.json"]
 		},
