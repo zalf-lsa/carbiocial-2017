@@ -32,7 +32,7 @@ from absolute_rot_generator import generate_template_abs, rel_to_abs_dates
 import numpy as np
 
 
-USER = "hampf"
+USER = "berg-lc"
 
 PATHS = {
     "hampf": {
@@ -49,6 +49,11 @@ PATHS = {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/"
+    },
+    "berg-lc": {
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD.000/Documents/GitHub/carbiocial-2017/"
     }
 }
 

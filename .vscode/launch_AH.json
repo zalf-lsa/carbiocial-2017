@@ -5,12 +5,10 @@
             "name": "Python",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
-            "pythonPath": "${config:python.pythonPath}",
+            "stopOnEntry": false,
+            "pythonPath": "${config.python.pythonPath}",
             "program": "${file}",
             "cwd": "${workspaceRoot}",
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -21,20 +19,18 @@
             "name": "PySpark",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
+            "stopOnEntry": false,
             "osx": {
-                "pythonPath": "${env:SPARK_HOME}/bin/spark-submit"
+                "pythonPath": "${env.SPARK_HOME}/bin/spark-submit"
             },
             "windows": {
-                "pythonPath": "${env:SPARK_HOME}/bin/spark-submit.cmd"
+                "pythonPath": "${env.SPARK_HOME}/bin/spark-submit.cmd"
             },
             "linux": {
-                "pythonPath": "${env:SPARK_HOME}/bin/spark-submit"
+                "pythonPath": "${env.SPARK_HOME}/bin/spark-submit"
             },
             "program": "${file}",
             "cwd": "${workspaceRoot}",
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -45,12 +41,10 @@
             "name": "Python Module",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
-            "pythonPath": "${config:python.pythonPath}",
+            "stopOnEntry": false,
+            "pythonPath": "${config.python.pythonPath}",
             "module": "module.name",
             "cwd": "${workspaceRoot}",
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -62,12 +56,10 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "${config:python.pythonPath}",
+            "pythonPath": "${config.python.pythonPath}",
             "program": "${file}",
-            "cwd": "",
+            "cwd": "null",
             "console": "integratedTerminal",
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit"
@@ -77,13 +69,11 @@
             "name": "External Terminal/Console",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
-            "pythonPath": "${config:python.pythonPath}",
+            "stopOnEntry": false,
+            "pythonPath": "${config.python.pythonPath}",
             "program": "${file}",
-            "cwd": "",
+            "cwd": "null",
             "console": "externalTerminal",
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit"
@@ -93,16 +83,14 @@
             "name": "Django",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
-            "pythonPath": "${config:python.pythonPath}",
+            "stopOnEntry": false,
+            "pythonPath": "${config.python.pythonPath}",
             "program": "${workspaceRoot}/manage.py",
             "cwd": "${workspaceRoot}",
             "args": [
                 "runserver",
                 "--noreload"
             ],
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -115,7 +103,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "${config:python.pythonPath}",
+            "pythonPath": "${config.python.pythonPath}",
             "program": "fully qualified path fo 'flask' executable. Generally located along with python interpreter",
             "cwd": "${workspaceRoot}",
             "env": {
@@ -126,7 +114,6 @@
                 "--no-debugger",
                 "--no-reload"
             ],
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -138,12 +125,10 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "${config:python.pythonPath}",
+            "pythonPath": "${config.python.pythonPath}",
             "program": "${workspaceRoot}/run.py",
             "cwd": "${workspaceRoot}",
             "args": [],
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -151,30 +136,11 @@
             ]
         },
         {
-            "name": "Pyramid",
-            "type": "python",
-            "request": "launch",
-            "stopOnEntry": true,
-            "pythonPath": "${config:python.pythonPath}",
-            "cwd": "${workspaceRoot}",
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
-            "args": [
-                "${workspaceRoot}/development.ini"
-            ],
-            "debugOptions": [
-                "WaitOnAbnormalExit",
-                "WaitOnNormalExit",
-                "RedirectOutput",
-                "Pyramid"
-            ]
-        },
-        {
             "name": "Watson",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
-            "pythonPath": "${config:python.pythonPath}",
+            "stopOnEntry": false,
+            "pythonPath": "${config.python.pythonPath}",
             "program": "${workspaceRoot}/console.py",
             "cwd": "${workspaceRoot}",
             "args": [
@@ -182,8 +148,6 @@
                 "runserver",
                 "--noreload=True"
             ],
-            "env": {},
-            "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",

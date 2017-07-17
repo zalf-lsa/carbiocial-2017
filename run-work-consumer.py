@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "hampf"
+USER = "berg-lc"
 
 PATHS = {
     "hampf": {
@@ -50,6 +50,12 @@ PATHS = {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/"
+    },
+    "berg-lc": {
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD.000/Documents/GitHub/carbiocial-2017/",
+        "LOCAL_PATH_TO_OUTPUT_DIR": "D:/carbiocial-2017-out/"
     }
 }
 
@@ -112,19 +118,17 @@ def create_template_grid(path_to_file, n_rows, n_cols):
 
 
 HEADER = """ncols         1928
-nrows         2545
+nrows         2544
 xllcorner     -9345.000000
 yllcorner     8000665.000000
 cellsize      900
 NODATA_value  -9999
 """
 
-def write_row_to_grids(data_, template_grid, rotation, period):
+def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_grid, rotation, period):
     "write grids row by row"
 
-    row_col_data = data_["row-col-data"]
-    row = data_["next-row"]
-    insert_nodata_rows_count = data_["insert-nodata-rows-count"]
+    
 
     row_template = template_grid[row]
     rows, cols = template_grid.shape
@@ -175,8 +179,7 @@ def write_row_to_grids(data_, template_grid, rotation, period):
             for crop, row_arr in c2d.iteritems():
             
                 crop = crop.replace("/", "").replace(" ", "")
-                #path_to_file = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "out_grids/" + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(year) + ".asc"
-                path_to_file = "D:/out_carbiocial/" + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(year) + ".asc"
+                path_to_file = PATHS[USER]["LOCAL_PATH_TO_OUTPUT_DIR"] + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(year) + ".asc"
 
                 if not os.path.isfile(path_to_file):
                     with open(path_to_file, "w") as _:
@@ -217,7 +220,7 @@ def main():
     socket.RCVTIMEO = 1000
     leave = False
     
-    n_rows = 2545
+    n_rows = 2544
     n_cols = 1928
         
     print("loading template for output...")
@@ -229,9 +232,11 @@ def main():
         "row-col-data": defaultdict(dict),
         "datacell-count": datacells_per_row.copy(), 
         "next-row": 0,
-        "insert-nodata-rows-count": 0
+        "insert-nodata-rows-count": 0,
+        "cached-rows-count": 0
     }))
 
+    cached_rows_threshold = 10
     while not leave:
         try:
             result = socket.recv_json(encoding="latin-1")
@@ -261,8 +266,12 @@ def main():
                 if datacells_per_row[data["next-row"]] == 0:
                     data["insert-nodata-rows-count"] += 1
                 else:
-                    write_row_to_grids(data, template_grid, rotation, period)
-                    data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and rotation
+                    data["cached-rows-count"] += 1
+                    if data["cached-rows-count"] >= cached_rows_threshold or data["next-row"] == (n_rows-1):
+                        for row_no in range(data["next-row"]-data["cached-rows-count"]+1, data["next-row"]+1):
+                            write_row_to_grids(data["row-col-data"], row_no, data["insert-nodata-rows-count"], template_grid, rotation, period)
+                            data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
+                        data["cached-rows-count"] = 0
                 
                 data["next-row"] += 1 # move to next row (to be written)
 
