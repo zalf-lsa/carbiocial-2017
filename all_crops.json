@@ -56,13 +56,6 @@
 					"temp-sum-above-base-temp": 80,
 					"base-temp": 0
 				},
-				{
-					"type": "MineralFertilization",
-					"days": 0,
-					"after": "Sowing",
-					"amount": [80.0, "kg N"],
-					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"]
-				},
 				{ 
 					"type": "AutomaticHarvest", 
 					"latest-date_relt": "0000-09-10",
@@ -73,6 +66,13 @@
 					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
+				{
+					"type": "MineralFertilization",
+					"days": 0,
+					"after": "Sowing",
+					"amount": [80.0, "kg N"],
+					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"]
+				},
 				{ 
 					"type": "Tillage",
 					"days": 1,
@@ -82,7 +82,7 @@
 			]
 		},
 
-		"cotton":		
+	"cotton":		
 		{
 			"worksteps": [
 				{ 
@@ -100,6 +100,16 @@
 					"max-curr-day-precip": 0.1,
 					"temp-sum-above-base-temp": 80,
 					"base-temp": 0
+				},
+				{ 
+					"type": "AutomaticHarvest", 
+					"latest-date_relt": "0000-09-10",
+					"latest-date": "0000-09-10",
+					"min-%-asw": 0,
+					"max-%-asw": 99,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
+					"harvest-time": "maturity"
 				},
 				{
 					"type": "MineralFertilization",
@@ -129,16 +139,7 @@
 					"amount": [27.5, "kg N"],
 					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"]
 				},
-				{ 
-					"type": "AutomaticHarvest", 
-					"latest-date_relt": "0000-09-10",
-					"latest-date": "0000-09-10",
-					"min-%-asw": 0,
-					"max-%-asw": 99,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
-					"harvest-time": "maturity"
-				},
+				
 				{ 
 					"type": "Tillage",
 					"days": 1,

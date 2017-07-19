@@ -55,6 +55,45 @@ def rel_to_abs_dates(rot, template_abs_rot, start_year, end_year, ref_dates_sowi
     current_index = -1 #identifies current crop
 
     for cm in range(len(template_abs_rot)):
+
+        crop_in_rotation, current_index = next_crop(rot, current_index)
+
+        sowing_ws = template_abs_rot[cm]["worksteps"][0]
+        template = sowing_ws["earliest-date_relt"].replace("0000", str(year))
+        if crop_in_rotation == "soybean":
+            earliest_sowing = date(year, 1, 1) + timedelta(days=ref_dates_sowing[year] - 1)
+            template = template.replace("09", str.zfill(str(earliest_sowing.month), 2))
+            template = template.replace("15", str.zfill(str(earliest_sowing.day), 2))
+            sowing_ws["earliest-date"] = template
+            sowing_ws["latest-date"] = unicode((earliest_sowing + timedelta(days=30)).isoformat())
+        else:
+            sowing_ws["earliest-date"] = template
+            sowing_ws["latest-date"] = sowing_ws["latest-date_relt"].replace("0000", str(year))
+
+        harvest_ws = template_abs_rot[cm]["worksteps"][1]
+        template = harvest_ws["latest-date_relt"]
+        if "0000-" in str(template):
+            harvest_ws["latest-date"] = template.replace("0000", str(year))
+        else: # 0001-
+            year += 1
+            if crop_in_rotation == "soybean" and early_harvest_soy:
+                template = template.replace("03-01", "02-10")
+            template = template.replace("0001", str(year))
+            harvest_ws["latest-date"] = template
+    
+    return template_abs_rot
+
+def rel_to_abs_dates_old(rot, template_abs_rot, start_year, end_year, ref_dates_sowing):
+    
+    early_harvest_soy = False
+    if "cotton" in rot:
+        early_harvest_soy = True
+
+    year = start_year
+
+    current_index = -1 #identifies current crop
+
+    for cm in range(len(template_abs_rot)):
         added_year = False
         crop_in_rotation, current_index = next_crop(rot, current_index)
         for step in template_abs_rot[cm]["worksteps"]:
