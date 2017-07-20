@@ -28,11 +28,11 @@ import soil_io
 import ascii_io
 from datetime import date, timedelta
 import copy
-from absolute_rot_generator import generate_template_abs, rel_to_abs_dates
+from absolute_rot_generator import generate_template_abs, rel_to_abs_dates, set_abs_dates
 import numpy as np
 
 
-USER = "berg-lc"
+USER = "stella"
 
 PATHS = {
     "hampf": {
@@ -102,7 +102,7 @@ def main():
         {
             "name": "historical",
             "start_year": 1981,
-            "end_year": 2012,
+            "end_year": 1983, #2012,
             "climate_folder": "climate-data-years-1981-2012-rows-0-2544"
         }, 
         {
@@ -121,9 +121,10 @@ def main():
 
     run_period = "historical"
 
+    # keep soybean as the first element please
     rotations = [
-        ("soybean", "cotton"),
-        ("soybean", "maize")
+        ("soybean_7", "cotton"),
+        ("soybean_8", "maize")
     ]
 
     n_rows = 2544
@@ -147,10 +148,12 @@ def main():
                 r = r + 1
             return out
 
-    def grids_to_3darrays(path_to_grids, start_year, end_year, skipheader=True):
+    def grids_to_3darrays(path_to_grids, start_year, end_year, skipheader=True, file_ext=".asc"):
         "key=year, 0=row, 1=col"
         out = {}
         for filename in os.listdir(path_to_grids):
+            if file_ext not in filename:
+                continue            
             year = int(filename.split("_")[0])
             if int(year) < start_year or int(year) > end_year:
                 continue
@@ -221,7 +224,7 @@ def main():
         if p["name"] != run_period:
             continue
         print ("loading rain onset grids for " + p["name"])
-        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], p["start_year"], p["end_year"], False)
+        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], p["start_year"], p["end_year"])
 
         templates_abs_rot = {}
         for rot in rotations:
@@ -240,8 +243,9 @@ def main():
                     ref_dates[year] = rain_onset[year][row, col]
 
                 for rot in rotations:
-                    env = envs[rot]                    
-                    env["cropRotation"] = rel_to_abs_dates(rot, templates_abs_rot[rot], p["start_year"], p["end_year"], ref_dates)
+                    env = envs[rot]
+                    #env["cropRotation"] = rel_to_abs_dates(rot, templates_abs_rot[rot], p["start_year"], p["end_year"], ref_dates)
+                    env["cropRotation"] = set_abs_dates(rot, templates_abs_rot[rot], ref_dates)
 
                     #set climate file - read by the server
                     env["csvViaHeaderOptions"] = sim["climate.csv-options"]

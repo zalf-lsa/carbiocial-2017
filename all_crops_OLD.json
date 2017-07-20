@@ -1,45 +1,32 @@
 
 {
-	"soybean_8": 		
+	"soybean": 		
 		{
 			"worksteps": [
 				{ 
-					"type": "Sowing", 
-					"crop": ["ref", "crops", "SOY_8"],
-					"date": "2199-09-15"					
+					"type": "AutomaticSowing", 
+					"crop": ["ref", "crops", "SOY"],
+					"earliest-date_relt": "0000-09-15",
+					"earliest-date": "0000-09-15",
+					"latest-date_relt": "0000-10-15",
+					"latest-date": "0000-10-15",
+					"min-temp": 18.5,
+					"days-in-temp-window": 14,
+					"min-%-asw": 0,
+					"max-%-asw": 100,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
+					"temp-sum-above-base-temp": 0,
+					"base-temp": 0
 				},				
 				{ 
 					"type": "AutomaticHarvest", 
-					"latest-date": "2199-03-01",
+					"latest-date_relt": "0001-03-01",
+					"latest-date": "0001-03-01",
 					"min-%-asw": 0,
-					"max-%-asw": 150,
-					"max-3d-precip-sum": 999,
-					"max-curr-day-precip": 999,
-					"harvest-time": "maturity"
-				},
-				{ 
-					"type": "Tillage",
-					"days": 1,
-					"after": "Harvest", 
-					"depth": 0.2
-				}
-			]
-		},
-	"soybean_7": 		
-		{
-			"worksteps": [
-				{ 
-					"type": "Sowing", 
-					"crop": ["ref", "crops", "SOY_7"],
-					"date": "2199-09-15"					
-				},				
-				{ 
-					"type": "AutomaticHarvest", 
-					"latest-date": "2199-03-01",
-					"min-%-asw": 0,
-					"max-%-asw": 150,
-					"max-3d-precip-sum": 999,
-					"max-curr-day-precip": 999,
+					"max-%-asw": 99,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
 				{ 
@@ -53,19 +40,30 @@
     "maize":		
 		{
 			"worksteps": [
-				{
-					"type": "Sowing",
+				{ 
+					"type": "AutomaticSowing", 
 					"crop": ["ref", "crops", "MZ"],
-					"days": 10,
-					"after": "Harvest"					
+					"earliest-date_relt": "0000-01-01",
+					"earliest-date": "0000-01-01",
+					"latest-date_relt": "0000-03-06",
+					"latest-date": "0000-03-06",
+					"min-temp": 7,
+					"days-in-temp-window": 5,
+					"min-%-asw": 0,
+					"max-%-asw": 95,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
+					"temp-sum-above-base-temp": 80,
+					"base-temp": 0
 				},
 				{ 
 					"type": "AutomaticHarvest", 
-					"latest-date": "2199-09-10",
+					"latest-date_relt": "0000-09-10",
+					"latest-date": "0000-09-10",
 					"min-%-asw": 0,
-					"max-%-asw": 150,
-					"max-3d-precip-sum": 999,
-					"max-curr-day-precip": 999,
+					"max-%-asw": 99,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
 				{
@@ -87,19 +85,30 @@
 	"cotton":		
 		{
 			"worksteps": [
-				{
-					"type": "Sowing",
+				{ 
+					"type": "AutomaticSowing", 
 					"crop": ["ref", "crops", "CO"],
-					"days": 10,
-					"after": "Harvest"					
+					"earliest-date_relt": "0000-01-01",
+					"earliest-date": "0000-01-01",
+					"latest-date_relt": "0000-02-15",
+					"latest-date": "0000-02-15",
+					"min-temp": 7,
+					"days-in-temp-window": 5,
+					"min-%-asw": 0,
+					"max-%-asw": 95,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
+					"temp-sum-above-base-temp": 80,
+					"base-temp": 0
 				},
 				{ 
 					"type": "AutomaticHarvest", 
-					"latest-date": "2199-09-10",
+					"latest-date_relt": "0000-09-10",
+					"latest-date": "0000-09-10",
 					"min-%-asw": 0,
-					"max-%-asw": 150,
-					"max-3d-precip-sum": 999,
-					"max-curr-day-precip": 999,
+					"max-%-asw": 99,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
 				{
