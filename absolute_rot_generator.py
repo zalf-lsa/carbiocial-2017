@@ -16,6 +16,89 @@ def next_crop(rotation, index):
 def generate_template_abs(rel_rotation, start_year, end_year, crops_data):
     ""
 
+    def create_cultivation_method(crop_info):
+        cultivation_method = {"worksteps": []}
+        for step in crop_info["worksteps"]:
+            mystep = copy.deepcopy(step)
+            cultivation_method["worksteps"].append(mystep)
+        return cultivation_method
+
+    current_index = -1 #identifies current crop
+
+    buffer_years = 2 #to be sure that there will be some template cm at the end of the rotation (avoid rot to restart)
+    n_years = end_year - start_year + 1 + buffer_years
+    crops_per_year = 2
+
+    template_abs_dates = []   
+
+    for year in range(n_years * crops_per_year):
+        crop_in_rotation, current_index = next_crop(rel_rotation, current_index)
+        cultivation_method = create_cultivation_method(crops_data[crop_in_rotation])
+        template_abs_dates.append(cultivation_method)
+
+    return template_abs_dates
+
+def set_abs_dates(rot, template_abs_rot, ref_dates):
+    
+    #max crop cycle duration; 10 days between harvest and sowing
+    max_mz_c = 170
+    max_co_c = 200
+    max_soy_c = 100
+    if "soybean_8" in rot:
+        max_soy_c = 120
+
+    cm = -1
+    current_index = -1 #identifies current crop
+    latest_harvest_mz = date(2199, 1, 1) # here to comply with q&d test
+    latest_harvest_co = date(2199, 1, 1)
+
+    #ref_dates = [(year, onset_doy)]
+    for r_date in ref_dates:
+        year = int(r_date[0])
+        doy = int(r_date[1])
+        
+        sowing_soy = date(year, 1, 1) + timedelta(days=doy - 1)
+        if current_index != -1: #q&d test
+            if "cotton" in rot and latest_harvest_co > sowing_soy:
+                print("Soy-cotton, year: " + str(year) + ", soy may not be sown due to early onset of rain season")
+            if "maize" in rot and latest_harvest_mz > sowing_soy:
+                print("Soy-maize, year: " + str(year) + ", soy may not be sown due to early onset of rain season")
+        latest_harvest_soy = sowing_soy + timedelta(days=max_soy_c)
+        latest_harvest_mz = latest_harvest_soy + timedelta(days=(10 + max_mz_c))
+        latest_harvest_co = latest_harvest_soy + timedelta(days=(10 + max_co_c))
+
+        for i in range(len(rot)):
+            cm += 1
+            crop_in_rotation, current_index = next_crop(rot, current_index)
+            sowing_ws = template_abs_rot[cm]["worksteps"][0]
+            harvest_ws = template_abs_rot[cm]["worksteps"][1]
+
+            if "soybean" in crop_in_rotation: #works for both soy 7 and 8
+                sowing_ws["date"] = unicode(sowing_soy.isoformat())
+                harvest_ws["latest-date"] = unicode(latest_harvest_soy.isoformat())
+            elif crop_in_rotation == "maize":
+                harvest_ws["latest-date"] = unicode(latest_harvest_mz.isoformat())
+            elif crop_in_rotation == "cotton":
+                harvest_ws["latest-date"] = unicode(latest_harvest_co.isoformat())
+        
+    #put a footer cultivation method that will prevent following to be executed
+    cm += 1
+    crop_in_rotation, current_index = next_crop(rot, current_index)
+    sowing_ws = template_abs_rot[cm]["worksteps"][0]
+    harvest_ws = template_abs_rot[cm]["worksteps"][1]
+    if "soybean" in crop_in_rotation: #works for both soy 7 and 8
+        sowing_ws["date"] = unicode("2199-12-31")
+        harvest_ws["latest-date"] = unicode("2199-12-31")
+    else:
+        #this should never be fired
+        print("no soybean found as a footer!! Look for errors")
+           
+
+    return template_abs_rot
+
+def generate_template_abs_old(rel_rotation, start_year, end_year, crops_data):
+    "this functions works with the information from the file all_crops_OLD, which uses relative dates"
+
     def create_cultivation_method(year, crop_info, crop_id):
         cultivation_method = {"worksteps": []}
         added_year = False
