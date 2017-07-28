@@ -30,6 +30,7 @@ from datetime import date, timedelta
 import copy
 from absolute_rot_generator import generate_template_abs, rel_to_abs_dates, set_abs_dates
 import numpy as np
+from collections import defaultdict
 
 
 USER = "stella"
@@ -102,7 +103,7 @@ def main():
         {
             "name": "historical",
             "start_year": 1981,
-            "end_year": 1983, #2012,
+            "end_year": 2012,
             "climate_folder": "climate-data-years-1981-2012-rows-0-2544"
         }, 
         {
@@ -129,6 +130,30 @@ def main():
 
     n_rows = 2544
     n_cols = 1928
+
+    def read_onset_dates(period, row):
+        "read onset dates and return a dict; k:col; v:(year, onset_doy)"
+        
+        print("reading onset dates of row " + str(row))
+
+        filepath = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "onset_out_"
+        if period["name"] == "historical":
+            filepath += "1981_2012/"
+        elif period["name"] == "future_wrf":
+            filepath += "2001_2040/"
+        elif period["name"] == "future_starr":
+            filepath += "2013_2040/"
+        filepath += "results_row-" + str(row) + ".csv"
+
+        onset_dates = defaultdict(list)
+
+        with open(filepath) as _:
+            reader = csv.reader(_)
+            next(reader)
+            for row in reader:
+                col = row[2].split("-")[1]
+                onset_dates[col].append((row[0], row[1]))
+        return onset_dates
 
     def ascii_grid_to_np2darray(path_to_file, skipheader=True):
         "0=row, 1=col"
@@ -223,14 +248,18 @@ def main():
     for p in periods:
         if p["name"] != run_period:
             continue
-        print ("loading rain onset grids for " + p["name"])
-        rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], p["start_year"], p["end_year"])
+        # onset are not anymore read from grids
+        #print ("loading rain onset grids for " + p["name"])
+        #rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], p["start_year"], p["end_year"])
 
         templates_abs_rot = {}
         for rot in rotations:
             templates_abs_rot[rot] = generate_template_abs(rot, p["start_year"], p["end_year"], crops_data)
 
         for row in range(n_rows):
+            
+            onset_dates_row = read_onset_dates(p, row)
+            
             for col in range(n_cols):
                 if soil_ids[row, col] == -9999:
                     continue
@@ -238,14 +267,14 @@ def main():
                 update_soil(row, col)
 
                 #customize rotation
-                ref_dates = {}
-                for year in range(p["start_year"], p["end_year"] + 1):
-                    ref_dates[year] = rain_onset[year][row, col]
+                #ref_dates = {}
+                #for year in range(p["start_year"], p["end_year"] + 1):
+                #    ref_dates[year] = rain_onset[year][row, col]
 
                 for rot in rotations:
                     env = envs[rot]
                     #env["cropRotation"] = rel_to_abs_dates(rot, templates_abs_rot[rot], p["start_year"], p["end_year"], ref_dates)
-                    env["cropRotation"] = set_abs_dates(rot, templates_abs_rot[rot], ref_dates)
+                    env["cropRotation"] = set_abs_dates(rot, templates_abs_rot[rot], onset_dates_row[str(col)])
 
                     #set climate file - read by the server
                     env["csvViaHeaderOptions"] = sim["climate.csv-options"]
