@@ -1,15 +1,21 @@
+import sys
+
+sys.path.insert(0, "./pylib/")
+print sys.path
+
 import numpy as np
 import pandas as pd
 import csv
 import os
-import sys
 import time
 from datetime import date, timedelta
+
+
 
 def main():
     "main function"
 
-    local_run = True
+    local_run = False
 
     config = {
         "from-year": "1981",
@@ -34,7 +40,7 @@ def main():
         extract_col_no = lambda s: int(s.split("-")[1].split(".")[0])
 
         start_time = time.clock()
-        iii = 0
+        #iii = 0
 
         #files <- list.files(path=path, full.names = T, recursive = T, pattern=glob2rx("*col*.csv*")) 
         for file_ in sorted(os.listdir(path), key=extract_col_no):
@@ -42,9 +48,9 @@ def main():
             if ".csv" not in file_:
                 continue
 
-            iii += 1
-            if iii > 10:
-                break
+            #iii += 1
+            #if iii > 10:
+            #    break
 
             col_no = extract_col_no(file_)
 
@@ -102,13 +108,15 @@ def main():
                 #print "year:", os_year, "doy:", onset, "col:", col_no
                 results.append([os_year, onset, col_no])
 
+            #print col_no,
+
         with open(config["output-path"] + "onsets_row-" + str(row_no) + ".csv", "w") as _:
             w = csv.writer(_, delimiter=",")
             for line in results:
                 w.writerow(line)
 
         end_time = time.clock()
-        print "runtime:", (end_time - start_time), "s for row:", row_no
+        #print "runtime:", (end_time - start_time), "s for row:", row_no
     
 
 main()

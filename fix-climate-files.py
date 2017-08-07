@@ -27,8 +27,8 @@ from collections import defaultdict
 def main():
 
     config = {
-        "from-row": "1",
-        "to-row": "2545",
+        "from-row": "0",
+        "to-row": "2544",
         "path": "P:/carbiocial/climate-data-years-1981-2012-rows-0-2544/"
     }
     if len(sys.argv) > 1:
@@ -39,7 +39,7 @@ def main():
 
     path = config["path"]
 
-    for row in xrange(int(config["from-row"])-1, int(config["to-row"])):
+    for row in xrange(int(config["from-row"]), int(config["to-row"])+1):
         for col in xrange(0, 1928):
             with open(path + "row-" + str(row) + "/col-" + str(col) + ".txt") as _:
                 data = defaultdict(lambda: defaultdict(dict))
