@@ -20,8 +20,8 @@ def main():
     config = {
         "from-year": "1981",
         "to-year": "2012",
-        "start-row": "1",
-        "end-row": "2545",
+        "start-row": "0",
+        "end-row": "2544",
         "input-path": "P:/carbiocial/climate-data-years-1981-2012-rows-0-2544/" if local_run else "/archiv-daten/md/projects/carbiocial/climate-data-years-1981-2012-rows-0-2544/",
         "output-path": "./" if local_run else "/archiv-daten/md/projects/carbiocial/onsets-1981-2012/"
     }
