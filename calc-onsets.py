@@ -10,8 +10,6 @@ import os
 import time
 from datetime import date, timedelta
 
-
-
 def main():
     "main function"
 
@@ -54,6 +52,9 @@ def main():
 
             col_no = extract_col_no(file_)
 
+            #if col_no != 676:
+            #    continue
+
             filepath = path + "/" + file_
             df = pd.read_csv(filepath, sep=",")
 
@@ -71,6 +72,7 @@ def main():
             variance_from_daily_means = daily_means - precip_mean
             # build the cumulative sum of anomaly
             cumsum = variance_from_daily_means.cumsum()
+            cumsum.index = range(1, 366+1)
 
             min_cumsum_index = cumsum.idxmin()
             #print "min_cumsum_index:", min_cumsum_index
