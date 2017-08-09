@@ -73,6 +73,7 @@ def main():
             # build the cumulative sum of anomaly
             cumsum = variance_from_daily_means.cumsum()
             cumsum.index = range(1, 366+1)
+            #print "cumsum:", cumsum
 
             min_cumsum_index = cumsum.idxmin()
             #print "min_cumsum_index:", min_cumsum_index
@@ -81,7 +82,9 @@ def main():
             for year in xrange(int(config["from-year"])+1, int(config["to-year"])-1+1):
                 # get a slice of the two adjacent years around year
                 df1 = df[(df["year"] == year-1) | (df["year"] == year) | (df["year"] == year+1)]
-                                
+
+                #print "year:", year, "df1:", df1
+
                 dsiy1 = date(year-1, 12, 31).timetuple().tm_yday
                 dsiy2 = date(year, 12, 31).timetuple().tm_yday
                 dsiy3 = date(year+1, 12, 31).timetuple().tm_yday
@@ -91,6 +94,7 @@ def main():
                     DOY = range(1, dsiy1+1) + range(1, dsiy2+1) + range(1, dsiy3+1),
                     idx = range(1, dsiy1+dsiy2+dsiy3+1))
 
+                #print "df11:", df11
                 # get index where DOY was the doy of the min_cumsum_index in the the average year we calculated above for this column
                 idx = df11[(df11["DOY"] == min_cumsum_index) & (df11["year"] == year)]["idx"].values[0]
 
