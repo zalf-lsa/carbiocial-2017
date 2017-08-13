@@ -36,6 +36,7 @@
 		
 		"events": [
 			"crop", [
+				["CM-count", "LAST"],
 				["Year", "LAST"], 
 				["Crop", "LAST"], 
 				["DOY|sowing", "FIRST"], 
@@ -46,59 +47,58 @@
 			],
 
 			{"at": "anthesis"}, [
-				"Year",
+				"CM-count",
 				"Crop",
 				["DOY|anthesis"]
 			],
 
 			{"at": "maturity"}, [
-				"Year",
+				"CM-count",
 				"Crop",
 				["DOY|matur"]
 			],
 
 			{"while": ["Stage", "=", 1]},[
-				["Year", "LAST"], 
+				["CM-count", "LAST"],
 				["Crop", "LAST"],
 				["Nstress|Nstress1", "AVG"], 
 				["TraDef|TraDef1", "AVG"]
 			],
 
 			{"while": ["Stage", "=", 2]},[
-				["Year", "LAST"], 
+				["CM-count", "LAST"],
 				["Crop", "LAST"],
 				["Nstress|Nstress2", "AVG"], 
 				["TraDef|TraDef2", "AVG"]
 			],
 
 			{"while": ["Stage", "=", 3]},[
-				["Year", "LAST"], 
+				["CM-count", "LAST"],
 				["Crop", "LAST"],
 				["Nstress|Nstress3", "AVG"], 
 				["TraDef|TraDef3", "AVG"]
 			],
 
 			{"while": ["Stage", "=", 4]},[
-				["Year", "LAST"], 
+				["CM-count", "LAST"],
 				["Crop", "LAST"],
 				["Nstress|Nstress4", "AVG"], 
 				["TraDef|TraDef4", "AVG"]
 			],
 
 			{"while": ["Stage", "=", 5]},[
-				["Year", "LAST"], 
+				["CM-count", "LAST"],
 				["Crop", "LAST"],
 				["Nstress|Nstress5", "AVG"], 
 				["TraDef|TraDef5", "AVG"]
 			],
 
 			{"while": ["Stage", "=", 6]},[
-				["Year", "LAST"], 
+				["CM-count", "LAST"],
 				["Crop", "LAST"],
 				["Nstress|Nstress6", "AVG"], 
 				["TraDef|TraDef6", "AVG"]
 			]
-
 		]
 	},
 	

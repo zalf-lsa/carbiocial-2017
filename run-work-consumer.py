@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-lc"
+USER = "berg-xps15"
 
 PATHS = {
     "hampf": {
@@ -49,7 +49,8 @@ PATHS = {
     "berg-xps15": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
-        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/"
+        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/",
+        "LOCAL_PATH_TO_OUTPUT_DIR": "out/"
     },
     "berg-lc": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
@@ -62,7 +63,7 @@ PATHS = {
 def create_output(result):
     "create output structure for single run"
 
-    year_to_crop_to_vals = defaultdict(lambda: defaultdict(dict))
+    cm_count_to_crop_to_vals = defaultdict(lambda: defaultdict(dict))
     if len(result.get("data", [])) > 0 and len(result["data"][0].get("results", [])) > 0:
 
         for data in result.get("data", []):
@@ -89,13 +90,13 @@ def create_output(result):
                     else:
                         vals[name] = val
 
-                if "Year" not in vals or "Crop" not in vals:
-                    print "Missing Year or Crop in result section. Skipping results section."
+                if "CM-count" not in vals or "Crop" not in vals:
+                    print "Missing CM-count or Crop in result section. Skipping results section."
                     continue
 
-                year_to_crop_to_vals[vals["Year"]][vals["Crop"]].update(vals)
+                cm_count_to_crop_to_vals[vals["CM-count"]][vals["Crop"]].update(vals)
 
-    return year_to_crop_to_vals
+    return cm_count_to_crop_to_vals
 
 def create_template_grid(path_to_file, n_rows, n_cols):
     "0=no data, 1=data"
@@ -128,8 +129,6 @@ NODATA_value  -9999
 def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_grid, rotation, period):
     "write grids row by row"
 
-    
-
     row_template = template_grid[row]
     rows, cols = template_grid.shape
 
@@ -138,6 +137,7 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
     output_grids = {
         "sowing": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
         "harvest": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "Year": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
         "Yield": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 2},
         "Nstressavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDefavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
@@ -159,10 +159,10 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
 
     for col in xrange(0, cols):
         if row_template[col] == 1:
-            for year, crop_to_data in row_col_data[row][col].iteritems():
+            for cm_count, crop_to_data in row_col_data[row][col].iteritems():
                 for crop, data in crop_to_data.iteritems():
                     for key, val in output_grids.iteritems():
-                        val["data"][year][crop][col] = data.get(key, -9999)
+                        val["data"][cm_count][crop][col] = data.get(key, -9999)
 
     for key, y2c2d_ in output_grids.iteritems():
         
@@ -174,12 +174,12 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
         else:
             mold = lambda x: str(round(x, digits))
 
-        for year, c2d in y2c2d.iteritems():
+        for cm_count, c2d in y2c2d.iteritems():
 
             for crop, row_arr in c2d.iteritems():
             
                 crop = crop.replace("/", "").replace(" ", "")
-                path_to_file = PATHS[USER]["LOCAL_PATH_TO_OUTPUT_DIR"] + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(year) + ".asc"
+                path_to_file = PATHS[USER]["LOCAL_PATH_TO_OUTPUT_DIR"] + period + "/" + crop + "_in_" + rotation + "_" + key + "_" + str(cm_count) + ".asc"
 
                 if not os.path.isfile(path_to_file):
                     with open(path_to_file, "w") as _:
@@ -236,7 +236,7 @@ def main():
         "cached-rows-count": 0
     }))
 
-    cached_rows_threshold = 10
+    cached_rows_threshold = 1 #10
     while not leave:
         try:
             result = socket.recv_json(encoding="latin-1")

@@ -33,7 +33,7 @@ import numpy as np
 from collections import defaultdict
 
 
-USER = "stella"
+USER = "berg-xps15"
 
 PATHS = {
     "hampf": {
@@ -136,14 +136,14 @@ def main():
         
         print("reading onset dates of row " + str(row))
 
-        filepath = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "onset_out_"
+        filepath = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "onsets-"
         if period["name"] == "historical":
-            filepath += "1981_2012/"
+            filepath += "1981-2012/"
         elif period["name"] == "future_wrf":
-            filepath += "2001_2040/"
+            filepath += "2001-2040/"
         elif period["name"] == "future_starr":
-            filepath += "2013_2040/"
-        filepath += "results_row-" + str(row) + ".csv"
+            filepath += "2013-2040/"
+        filepath += "onsets_row-" + str(row) + ".csv"
 
         onset_dates = defaultdict(list)
 
@@ -151,7 +151,7 @@ def main():
             reader = csv.reader(_)
             next(reader)
             for row in reader:
-                col = row[2].split("-")[1]
+                col = int(row[2])
                 onset_dates[col].append((row[0], row[1]))
         return onset_dates
 
@@ -274,7 +274,7 @@ def main():
                 for rot in rotations:
                     env = envs[rot]
                     #env["cropRotation"] = rel_to_abs_dates(rot, templates_abs_rot[rot], p["start_year"], p["end_year"], ref_dates)
-                    env["cropRotation"] = set_abs_dates(rot, templates_abs_rot[rot], onset_dates_row[str(col)])
+                    env["cropRotation"] = set_abs_dates(rot, templates_abs_rot[rot], onset_dates_row[col])
 
                     #set climate file - read by the server
                     env["csvViaHeaderOptions"] = sim["climate.csv-options"]
