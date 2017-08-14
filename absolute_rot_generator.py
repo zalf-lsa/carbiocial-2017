@@ -53,9 +53,9 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
     latest_harvest_co = date(2199, 1, 1)
 
     #ref_dates = [(year, onset_doy)]
-    for r_date in ref_dates:
-        year = int(r_date[0])
-        doy = int(r_date[1])
+    for rd in range(len(ref_dates)):
+        year = int(ref_dates[rd][0])
+        doy = int(ref_dates[rd][1])
         
         sowing_soy = date(year, 1, 1) + timedelta(days=doy - 1)
         if current_index != -1: #q&d test
@@ -64,8 +64,19 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
             if "maize" in rot and latest_harvest_mz > sowing_soy:
                 print("Soy-maize, year: " + str(year) + ", soy may not be sown due to early onset of rain season")
         latest_harvest_soy = sowing_soy + timedelta(days=max_soy_c)
-        latest_harvest_mz = latest_harvest_soy + timedelta(days=(10 + max_mz_c))
-        latest_harvest_co = latest_harvest_soy + timedelta(days=(10 + max_co_c))
+        #latest harvest of mz and co cannot be > than (next onset - 5d): in this way soy is always sown
+        #this prevents the warning "soy may not be sown due to early onset of rain season" to be fired
+        if rd < len(ref_dates) - 1:
+            year_next = int(ref_dates[rd+1][0])
+            doy_next = int(ref_dates[rd+1][1])
+            next_onset = date(year_next, 1, 1) + timedelta(days=doy_next - 6)
+            latest_harvest_mz = min(latest_harvest_soy + timedelta(days=(10 + max_mz_c)), next_onset)
+            latest_harvest_co = min(latest_harvest_soy + timedelta(days=(10 + max_co_c)), next_onset)
+        else:
+            #the last year of the list does not have a next onset :)
+            latest_harvest_mz = latest_harvest_soy + timedelta(days=(10 + max_mz_c))
+            latest_harvest_co = latest_harvest_soy + timedelta(days=(10 + max_co_c))
+        
 
         for i in range(len(rot)):
             cm += 1
@@ -91,9 +102,11 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
         harvest_ws["latest-date"] = unicode("2199-12-31")
     else:
         #this should never be fired
-        print("no soybean found as a footer!! Look for errors")
-           
-
+        print("no soybean found as a footer!! Look for errors")           
+    
+    #with open("test_rotation.json", "w") as _:
+    #    _.write(json.dumps(template_abs_rot))
+    
     return template_abs_rot
 
 def generate_template_abs_old(rel_rotation, start_year, end_year, crops_data):

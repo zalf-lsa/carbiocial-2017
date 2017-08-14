@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-xps15"
+USER = "stella"
 
 PATHS = {
     "hampf": {
@@ -212,6 +212,8 @@ def main():
                 config[k] = int(v) 
 
     local_run = False
+    write_normal_output_files = False
+    
     i = 0
     context = zmq.Context()
     socket = context.socket(zmq.PULL)
@@ -249,7 +251,7 @@ def main():
             print "received finish message"
             leave = True
 
-        else:
+        elif not write_normal_output_files:
             custom_id = result["customId"]
             ci_parts = custom_id.split("|")
             period = ci_parts[0]
@@ -281,6 +283,42 @@ def main():
 
             #if i > 5000:
             #    return
+        
+        elif write_normal_output_files:
+            print "received work result ", i, " customId: ", result.get("customId", "")
+
+            custom_id = result["customId"]
+            ci_parts = custom_id.split("|")
+            period = ci_parts[0]
+            row = int(ci_parts[1])
+            col = int(ci_parts[2])
+            rotation = ci_parts[3]
+            file_name = str(row) + "_" + str(col) + "_" + rotation + "_" + period
+            
+
+            #with open("out/out-" + str(i) + ".csv", 'wb') as _:
+            with open("out/out-" + file_name + ".csv", 'wb') as _:
+                writer = csv.writer(_, delimiter=",")
+
+                for data_ in result.get("data", []):
+                    results = data_.get("results", [])
+                    orig_spec = data_.get("origSpec", "")
+                    output_ids = data_.get("outputIds", [])
+
+                    if len(results) > 0:
+                        writer.writerow([orig_spec.replace("\"", "")])
+                        for row in monica_io.write_output_header_rows(output_ids,
+                                                                      include_header_row=True,
+                                                                      include_units_row=True,
+                                                                      include_time_agg=False):
+                            writer.writerow(row)
+
+                        for row in monica_io.write_output(output_ids, results):
+                            writer.writerow(row)
+
+                    writer.writerow([])
+
+            i = i + 1
 
 
 main()

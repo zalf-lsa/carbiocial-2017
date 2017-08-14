@@ -70,7 +70,7 @@
 				},
 				{
 					"type": "MineralFertilization",
-					"days": 0,
+					"days": 1,
 					"after": "Sowing",
 					"amount": [80.0, "kg N"],
 					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"]
@@ -104,7 +104,7 @@
 				},
 				{
 					"type": "MineralFertilization",
-					"days": 0,
+					"days": 1,
 					"after": "Sowing",
 					"amount": [27.5, "kg N"],
 					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"]

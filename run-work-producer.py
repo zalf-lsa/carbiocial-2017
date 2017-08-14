@@ -33,7 +33,7 @@ import numpy as np
 from collections import defaultdict
 
 
-USER = "berg-xps15"
+USER = "stella"
 
 PATHS = {
     "hampf": {
