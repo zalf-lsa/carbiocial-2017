@@ -282,9 +282,9 @@ def main():
                     env["csvViaHeaderOptions"]["end-date"] = sim["end-date"].replace("2012", str(p["end_year"]))
                     #note that the climate file content is csv like, despite the extension .asc
                     if local_run:
-                        env["pathToClimateCSV"] = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + p["climate_folder"] + "/" + "row-" + str(row) + "/col-" + str(col) + ".asc" 
+                        env["pathToClimateCSV"] = PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + p["climate_folder"] + "/" + "row-" + str(row) + "/col-" + str(col) + ".csv" 
                     else:
-                        env["pathToClimateCSV"] = PATH_TO_ARCHIV_DIR + p["climate_folder"] + "/" + "row-" + str(row) + "/col-" + str(col) + ".asc" 
+                        env["pathToClimateCSV"] = PATH_TO_ARCHIV_DIR + p["climate_folder"] + "/" + "row-" + str(row) + "/col-" + str(col) + ".csv" 
 
                     rot_id = rot[0] + "_" + rot[1]
                     env["customId"] = p["name"] \

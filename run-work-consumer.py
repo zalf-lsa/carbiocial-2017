@@ -156,7 +156,11 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
         "Nstress5": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDef5": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "Nstress6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "TraDef6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4}
+        "TraDef6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "NFert": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "NLeach": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "PercolationRate": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "Nmin": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4}
     }
 
     for col in xrange(0, cols):

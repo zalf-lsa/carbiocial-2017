@@ -35,6 +35,16 @@
 		},
 		
 		"events": [
+			"daily", [
+				"CM-count",
+				"Crop",
+				"Stage",
+				"Date",
+				"NFert",
+				"NLeach",
+				["PercolationRate", 16],
+				["Nmin", [1, 3, "SUM"]]
+			],
 			"crop", [
 				["CM-count", "LAST"],
 				["Year", "LAST"], 

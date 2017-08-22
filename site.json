@@ -12,7 +12,7 @@
   "SoilTemperatureParameters": ["include-from-file", "monica-parameters/general/soil-temperature.json"],
 	"EnvironmentParameters": {
     "=": ["include-from-file", "monica-parameters/general/environment.json"],
-    "LeachingDepth": 2.0,
+    "LeachingDepth": 1.6,
     "WindSpeedHeight": 2.0
   },
   "SoilOrganicParameters": ["include-from-file", "monica-parameters/general/soil-organic.json"],
