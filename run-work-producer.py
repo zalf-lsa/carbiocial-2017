@@ -152,7 +152,7 @@ def main():
             next(reader)
             for row in reader:
                 col = int(row[2])
-                onset_dates[col].append((row[0], row[1]))
+                onset_dates[col].append((int(row[0]), int(row[1])))
         return onset_dates
 
     def ascii_grid_to_np2darray(path_to_file, skipheader=True):
@@ -257,12 +257,12 @@ def main():
             templates_abs_rot[rot] = generate_template_abs(rot, p["start_year"], p["end_year"], crops_data)
 
         for row in range(n_rows):
-            
             onset_dates_row = read_onset_dates(p, row)
             
             for col in range(n_cols):
                 if soil_ids[row, col] == -9999:
                     continue
+                
                 #update soil data
                 update_soil(row, col)
 
@@ -270,6 +270,15 @@ def main():
                 #ref_dates = {}
                 #for year in range(p["start_year"], p["end_year"] + 1):
                 #    ref_dates[year] = rain_onset[year][row, col]
+
+                #onset calculation requires 3 years in a row:
+                #for this reason, we drop any onset calculated in the first year or in the first half of the second year
+                #to avoid comparing two different seasons in the same map
+                while onset_dates_row[col][0][0] == p["start_year"]:
+                    onset_dates_row[col].pop(0)
+                if onset_dates_row[col][0][0] == p["start_year"] + 1 and onset_dates_row[col][0][1] < 180:
+                    onset_dates_row[col].pop(0)
+                #print onset_dates_row[col]
 
                 for rot in rotations:
                     env = envs[rot]

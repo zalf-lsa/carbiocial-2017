@@ -139,28 +139,32 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
     output_grids = {
         "sowing": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
         "harvest": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
-        "Year": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        #"Year": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "s-year": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "h-year": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
         "Yield": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 2},
-        "Nstressavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "NDefavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDefavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "anthesis": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
         "matur": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
-        "Nstress1": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        #"Nstress1": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDef1": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "Nstress2": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        #"Nstress2": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDef2": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "Nstress3": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        #"Nstress3": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDef3": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "Nstress4": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        #"Nstress4": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDef4": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "Nstress5": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        #"Nstress5": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDef5": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "Nstress6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        #"Nstress6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "TraDef6": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "NFert": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "NLeach": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "PercolationRate": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "Nmin": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4}
+        "Nmin": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "SumNUp": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "length": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0}
     }
 
     for col in xrange(0, cols):
@@ -280,8 +284,11 @@ def main():
                             write_row_to_grids(data["row-col-data"], row_no, data["insert-nodata-rows-count"], template_grid, rotation, period)
                             data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
                         data["cached-rows-count"] = 0
-                
+
+                #if data["next-row"] < (n_rows - 1): #TODO fix for the last line
                 data["next-row"] += 1 # move to next row (to be written)
+                #else:
+                #    break
 
             i = i + 1
 

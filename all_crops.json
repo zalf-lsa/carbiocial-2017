@@ -56,7 +56,7 @@
 				{
 					"type": "Sowing",
 					"crop": ["ref", "crops", "MZ"],
-					"days": 10,
+					"days": 5,
 					"after": "Harvest"					
 				},
 				{ 
@@ -97,7 +97,7 @@
 				{
 					"type": "Sowing",
 					"crop": ["ref", "crops", "CO"],
-					"days": 10,
+					"days": 5,
 					"after": "Harvest"					
 				},
 				{ 

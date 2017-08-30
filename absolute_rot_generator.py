@@ -41,11 +41,11 @@ def generate_template_abs(rel_rotation, start_year, end_year, crops_data):
 def set_abs_dates(rot, template_abs_rot, ref_dates):
     
     #max crop cycle duration; 10 days between harvest and sowing
-    max_mz_c = 170
-    max_co_c = 200
-    max_soy_c = 100
+    max_mz_c = 160 #used only the last year
+    max_co_c = 210 #used only the last year
+    max_soy_c = 130
     if "soybean_8" in rot:
-        max_soy_c = 120
+        max_soy_c = 140
 
     cm = -1
     current_index = -1 #identifies current crop
@@ -56,26 +56,20 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
     for rd in range(len(ref_dates)):
         year = int(ref_dates[rd][0])
         doy = int(ref_dates[rd][1])
-        
+
         sowing_soy = date(year, 1, 1) + timedelta(days=doy - 1)
-        if current_index != -1: #q&d test
-            if "cotton" in rot and latest_harvest_co > sowing_soy:
-                print("Soy-cotton, year: " + str(year) + ", soy may not be sown due to early onset of rain season")
-            if "maize" in rot and latest_harvest_mz > sowing_soy:
-                print("Soy-maize, year: " + str(year) + ", soy may not be sown due to early onset of rain season")
         latest_harvest_soy = sowing_soy + timedelta(days=max_soy_c)
         #latest harvest of mz and co cannot be > than (next onset - 5d): in this way soy is always sown
-        #this prevents the warning "soy may not be sown due to early onset of rain season" to be fired
         if rd < len(ref_dates) - 1:
             year_next = int(ref_dates[rd+1][0])
             doy_next = int(ref_dates[rd+1][1])
             next_onset = date(year_next, 1, 1) + timedelta(days=doy_next - 6)
-            latest_harvest_mz = min(latest_harvest_soy + timedelta(days=(10 + max_mz_c)), next_onset)
-            latest_harvest_co = min(latest_harvest_soy + timedelta(days=(10 + max_co_c)), next_onset)
+            latest_harvest_mz = next_onset
+            latest_harvest_co = next_onset
         else:
             #the last year of the list does not have a next onset :)
-            latest_harvest_mz = latest_harvest_soy + timedelta(days=(10 + max_mz_c))
-            latest_harvest_co = latest_harvest_soy + timedelta(days=(10 + max_co_c))
+            latest_harvest_mz = latest_harvest_soy + timedelta(days=(5 + max_mz_c))
+            latest_harvest_co = latest_harvest_soy + timedelta(days=(5 + max_co_c))
         
 
         for i in range(len(rot)):
@@ -102,11 +96,11 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
         harvest_ws["latest-date"] = unicode("2199-12-31")
     else:
         #this should never be fired
-        print("no soybean found as a footer!! Look for errors")           
-    
+        print("no soybean found as a footer!! Look for errors")
+
     #with open("test_rotation.json", "w") as _:
     #    _.write(json.dumps(template_abs_rot))
-    
+
     return template_abs_rot
 
 def generate_template_abs_old(rel_rotation, start_year, end_year, crops_data):
