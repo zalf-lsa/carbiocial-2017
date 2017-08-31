@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "stella"
+USER = "berg-lc"
 
 PATHS = {
     "hampf": {
@@ -58,7 +58,7 @@ PATHS = {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD.000/Documents/GitHub/carbiocial-2017/",
-        "LOCAL_PATH_TO_OUTPUT_DIR": "D:/carbiocial-2017-out/"
+        "LOCAL_PATH_TO_OUTPUT_DIR": "G:/carbiocial-2017-out/" #"P:/carbiocial/micha-out/" #"D:/carbiocial-2017-out/"
     }
 }
 
@@ -248,11 +248,20 @@ def main():
         "cached-rows-count": 0
     }))
 
-    cached_rows_threshold = 1 #10
+    cached_rows_threshold = 5 #10
     while not leave:
         try:
             result = socket.recv_json(encoding="latin-1")
         except:
+            for period, rtd in period_to_rotation_to_data.iteritems():
+                for rotation, data in rtd.iteritems():
+                    while data["next-row"] in data["datacell-count"] and data["datacell-count"][data["next-row"]] == 0:
+                        for row_no in range(data["next-row"] - data["cached-rows-count"] + 1, data["next-row"] + 1):
+                            write_row_to_grids(data["row-col-data"], row_no, data["insert-nodata-rows-count"], template_grid, rotation, period)
+                            data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
+                        data["cached-rows-count"] = 0
+                        data["next-row"] += 1 # move to next row (to be written)
+
             continue
 
         if result["type"] == "finish":
@@ -273,7 +282,7 @@ def main():
             data["row-col-data"][row][col] = create_output(result)
             data["datacell-count"][row] -= 1
 
-            while data["datacell-count"][data["next-row"]] == 0:
+            while data["next-row"] in data["datacell-count"] and data["datacell-count"][data["next-row"]] == 0:
                 # if rows have been initially completely nodata, remember to write these rows before the next row with some data
                 if datacells_per_row[data["next-row"]] == 0:
                     data["insert-nodata-rows-count"] += 1
@@ -285,10 +294,7 @@ def main():
                             data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
                         data["cached-rows-count"] = 0
 
-                #if data["next-row"] < (n_rows - 1): #TODO fix for the last line
                 data["next-row"] += 1 # move to next row (to be written)
-                #else:
-                #    break
 
             i = i + 1
 
