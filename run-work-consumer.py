@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-lc"
+USER = "berg-xps15"
 
 PATHS = {
     "hampf": {
@@ -128,7 +128,7 @@ cellsize      900
 NODATA_value  -9999
 """
 
-def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_grid, rotation, period):
+def write_row_to_grids(row_col_data, row, template_grid, rotation, period):
     "write grids row by row"
 
     row_template = template_grid[row]
@@ -167,12 +167,15 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
         "length": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0}
     }
 
-    for col in xrange(0, cols):
-        if row_template[col] == 1:
-            for cm_count, crop_to_data in row_col_data[row][col].iteritems():
-                for crop, data in crop_to_data.iteritems():
-                    for key, val in output_grids.iteritems():
-                        val["data"][cm_count][crop][col] = data.get(key, -9999)
+    # skip this part if we write just a nodata line
+    if row in row_col_data:
+        for col in xrange(0, cols):
+            if row_template[col] == 1:
+                if col in row_col_data[row]:
+                    for cm_count, crop_to_data in row_col_data[row][col].iteritems():
+                        for crop, data in crop_to_data.iteritems():
+                            for key, val in output_grids.iteritems():
+                                val["data"][cm_count][crop][col] = data.get(key, -9999)
 
     for key, y2c2d_ in output_grids.iteritems():
         
@@ -196,22 +199,19 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
                         _.write(HEADER)
 
                 with open(path_to_file, "a") as _:
-                    if insert_nodata_rows_count > 0:
-                        for i in xrange(0, insert_nodata_rows_count):
-                            rowstr = " ".join(map(lambda x: "-9999", row_template))
-                            _.write(rowstr +  "\n")
-
                     rowstr = " ".join(map(lambda x: "-9999" if int(x) == -9999 else mold(x), row_arr))
                     _.write(rowstr +  "\n")
     
-    del row_col_data[row]
+    if row in row_col_data:
+        del row_col_data[row]
 
 
 def main():
     "collect data from workers"
 
     config = {
-        "port": 7777
+        "port": 7777,
+        "start-row": 0
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -229,7 +229,7 @@ def main():
         socket.connect("tcp://localhost:" + str(config["port"]))
     else:
         socket.connect("tcp://cluster2:" + str(config["port"]))    
-    socket.RCVTIMEO = 1000
+    socket.RCVTIMEO = 10000
     leave = False
     
     n_rows = 2544
@@ -243,25 +243,22 @@ def main():
     period_to_rotation_to_data = defaultdict(lambda: defaultdict(lambda: {
         "row-col-data": defaultdict(dict),
         "datacell-count": datacells_per_row.copy(), 
-        "next-row": 0,
-        "insert-nodata-rows-count": 0,
-        "cached-rows-count": 0
+        "next-row": config["start-row"]
     }))
 
-    cached_rows_threshold = 5 #10
     while not leave:
         try:
             result = socket.recv_json(encoding="latin-1")
         except:
+            print "no activity on socket for ", (socket.RCVTIMEO / 1000.0), "s, trying to write final data"
             for period, rtd in period_to_rotation_to_data.iteritems():
+                print "period:", period
                 for rotation, data in rtd.iteritems():
-                    while data["next-row"] in data["datacell-count"] and data["datacell-count"][data["next-row"]] == 0:
-                        for row_no in range(data["next-row"] - data["cached-rows-count"] + 1, data["next-row"] + 1):
-                            write_row_to_grids(data["row-col-data"], row_no, data["insert-nodata-rows-count"], template_grid, rotation, period)
-                            data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
-                        data["cached-rows-count"] = 0
+                    print "rotation:", rotation
+                    while data["next-row"] in data["row-col-data"]:# and data["datacell-count"][data["next-row"]] == 0:
+                        print "row:", data["next-row"]
+                        write_row_to_grids(data["row-col-data"], data["next-row"], template_grid, rotation, period)
                         data["next-row"] += 1 # move to next row (to be written)
-
             continue
 
         if result["type"] == "finish":
@@ -277,29 +274,16 @@ def main():
             rotation = ci_parts[3]
 
             data = period_to_rotation_to_data[period][rotation]
-            print "received work result", i, "customId:", result.get("customId", ""), "size:",len(data["row-col-data"])
+            print "received work result", i, "customId:", result.get("customId", ""), "next row:",data["next-row"], "cols to go:", data["datacell-count"][row], "rows unwritten:", len(data["row-col-data"])
 
             data["row-col-data"][row][col] = create_output(result)
             data["datacell-count"][row] -= 1
 
-            while data["next-row"] in data["datacell-count"] and data["datacell-count"][data["next-row"]] == 0:
-                # if rows have been initially completely nodata, remember to write these rows before the next row with some data
-                if datacells_per_row[data["next-row"]] == 0:
-                    data["insert-nodata-rows-count"] += 1
-                else:
-                    data["cached-rows-count"] += 1
-                    if data["cached-rows-count"] >= cached_rows_threshold or data["next-row"] == (n_rows-1):
-                        for row_no in range(data["next-row"]-data["cached-rows-count"]+1, data["next-row"]+1):
-                            write_row_to_grids(data["row-col-data"], row_no, data["insert-nodata-rows-count"], template_grid, rotation, period)
-                            data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
-                        data["cached-rows-count"] = 0
-
+            while datacells_per_row[data["next-row"]] == 0 or (data["next-row"] in data["row-col-data"] and data["datacell-count"][data["next-row"]] == 0):
+                write_row_to_grids(data["row-col-data"], data["next-row"], template_grid, rotation, period)
                 data["next-row"] += 1 # move to next row (to be written)
 
             i = i + 1
-
-            #if i > 5000:
-            #    return
         
         elif write_normal_output_files:
             print "received work result ", i, " customId: ", result.get("customId", "")

@@ -33,7 +33,7 @@ import numpy as np
 from collections import defaultdict
 
 
-USER = "stella"
+USER = "berg-xps15"
 
 PATHS = {
     "hampf": {
@@ -65,7 +65,8 @@ def main():
     "main function"
 
     config = {
-        "port": 6666
+        "port": 6666,
+        "start-row": 0
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -256,7 +257,7 @@ def main():
         for rot in rotations:
             templates_abs_rot[rot] = generate_template_abs(rot, p["start_year"], p["end_year"], crops_data)
 
-        for row in range(n_rows):
+        for row in range(config["start-row"], n_rows):
             onset_dates_row = read_onset_dates(p, row)
             
             for col in range(n_cols):
