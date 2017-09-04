@@ -27,12 +27,21 @@ LOCAL_RUN = False
 def main():
     "simply empty queue"
 
+    config = {
+        "port": "7777"
+    }
+    if len(sys.argv) > 1:
+        for arg in sys.argv[1:]:
+            k,v = arg.split("=")
+            if k in config:
+                config[k] = v 
+
     context = zmq.Context()
     socket = context.socket(zmq.PULL)
     if LOCAL_RUN:
-        socket.connect("tcp://localhost:7777")
+        socket.connect("tcp://localhost:"+config["port"])
     else:
-        socket.connect("tcp://cluster2:7777")
+        socket.connect("tcp://cluster2:"+config["port"])
 
     i = 0
     while True:
