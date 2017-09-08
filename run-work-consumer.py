@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-lc"
+USER = "berg-xps15"
 
 PATHS = {
     "hampf": {
@@ -128,7 +128,7 @@ cellsize      900
 NODATA_value  -9999
 """
 
-def write_row_to_grids(row_col_data, row, template_grid, rotation, period):
+def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_grid, rotation, period):
     "write grids row by row"
 
     row_template = template_grid[row]
@@ -199,6 +199,12 @@ def write_row_to_grids(row_col_data, row, template_grid, rotation, period):
                         _.write(HEADER)
 
                 with open(path_to_file, "a") as _:
+
+                    if insert_nodata_rows_count > 0:
+                        for i in xrange(0, insert_nodata_rows_count):
+                            rowstr = " ".join(map(lambda x: "-9999", row_template))
+                            _.write(rowstr +  "\n")
+
                     rowstr = " ".join(map(lambda x: "-9999" if int(x) == -9999 else mold(x), row_arr))
                     _.write(rowstr +  "\n")
     
@@ -243,6 +249,7 @@ def main():
     period_to_rotation_to_data = defaultdict(lambda: defaultdict(lambda: {
         "row-col-data": defaultdict(dict),
         "datacell-count": datacells_per_row.copy(), 
+        "insert-nodata-rows-count": 0,
         "next-row": config["start-row"]
     }))
 
@@ -259,7 +266,8 @@ def main():
                     print "rotation:", rotation
                     while data["next-row"] in data["row-col-data"]:# and data["datacell-count"][data["next-row"]] == 0:
                         print "row:", data["next-row"]
-                        write_row_to_grids(data["row-col-data"], data["next-row"], template_grid, rotation, period)
+                        write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
+                        data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
                         data["next-row"] += 1 # move to next row (to be written)
             continue
 
@@ -287,7 +295,13 @@ def main():
 
             while (data["next-row"] < n_rows and datacells_per_row[data["next-row"]] == 0) \
             or (data["next-row"] in data["row-col-data"] and data["datacell-count"][data["next-row"]] == 0):
-                write_row_to_grids(data["row-col-data"], data["next-row"], template_grid, rotation, period)
+                # if rows have been initially completely nodata, remember to write these rows before the next row with some data
+                if datacells_per_row[data["next-row"]] == 0:
+                    data["insert-nodata-rows-count"] += 1
+                else:
+                    write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
+                    data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
+                
                 data["next-row"] += 1 # move to next row (to be written)
 
             i = i + 1
