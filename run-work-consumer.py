@@ -164,7 +164,11 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
         "PercolationRate": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "Nmin": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
         "SumNUp": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
-        "length": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0}
+        "length": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
+        "avg-precip": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 4},
+        "avg-tavg": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 1},
+        "avg-tmax": {"data" : make_dict_dict_nparr(), "cast-to": "float", "digits": 1},
+        "Tmax>=40": {"data" : make_dict_dict_nparr(), "cast-to": "int", "digits": 0},
     }
 
     # skip this part if we write just a nodata line
@@ -179,6 +183,8 @@ def write_row_to_grids(row_col_data, row, insert_nodata_rows_count, template_gri
 
     for key, y2c2d_ in output_grids.iteritems():
         
+        key = key.replace(">=", "gt")
+
         y2c2d = y2c2d_["data"]
         cast_to = y2c2d_["cast-to"]
         digits = y2c2d_["digits"]
@@ -216,14 +222,15 @@ def main():
     "collect data from workers"
 
     config = {
-        "port": 7777,
-        "start-row": 0
+        "port": "7777",
+        "start-row": "0",
+        "server": "cluster2"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
             k,v = arg.split("=")
             if k in config:
-                config[k] = int(v) 
+                config[k] = v 
 
     local_run = False
     write_normal_output_files = False
@@ -232,9 +239,9 @@ def main():
     context = zmq.Context()
     socket = context.socket(zmq.PULL)
     if local_run:
-        socket.connect("tcp://localhost:" + str(config["port"]))
+        socket.connect("tcp://localhost:" + config["port"])
     else:
-        socket.connect("tcp://cluster2:" + str(config["port"]))    
+        socket.connect("tcp://" + config["server"] + ":" + config["port"])    
     socket.RCVTIMEO = 10000
     leave = False
     
@@ -250,7 +257,7 @@ def main():
         "row-col-data": defaultdict(dict),
         "datacell-count": datacells_per_row.copy(), 
         "insert-nodata-rows-count": 0,
-        "next-row": config["start-row"]
+        "next-row": int(config["start-row"])
     }))
 
     debug_file = open("debug.out", "w")
@@ -259,16 +266,16 @@ def main():
         try:
             result = socket.recv_json(encoding="latin-1")
         except:
-            print "no activity on socket for ", (socket.RCVTIMEO / 1000.0), "s, trying to write final data"
-            for period, rtd in period_to_rotation_to_data.iteritems():
-                print "period:", period
-                for rotation, data in rtd.iteritems():
-                    print "rotation:", rotation
-                    while data["next-row"] in data["row-col-data"]:# and data["datacell-count"][data["next-row"]] == 0:
-                        print "row:", data["next-row"]
-                        write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
-                        data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
-                        data["next-row"] += 1 # move to next row (to be written)
+            #print "no activity on socket for ", (socket.RCVTIMEO / 1000.0), "s, trying to write final data"
+            #for period, rtd in period_to_rotation_to_data.iteritems():
+            #    print "period:", period
+            #    for rotation, data in rtd.iteritems():
+            #        print "rotation:", rotation
+            #        while data["next-row"] in data["row-col-data"]:# and data["datacell-count"][data["next-row"]] == 0:
+            #            print "row:", data["next-row"]
+            #            write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
+            #            data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
+            #            data["next-row"] += 1 # move to next row (to be written)
             continue
 
         if result["type"] == "finish":
@@ -285,7 +292,7 @@ def main():
 
             data = period_to_rotation_to_data[period][rotation]
             debug_msg = "received work result " + str(i) + " customId: " + result.get("customId", "") \
-            + " next row: " + str(data["next-row"]) + " cols to go: " + str(data["datacell-count"][row]) \
+            + " next row: " + str(data["next-row"]) + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) \
             + " rows unwritten: " + str(data["row-col-data"].keys()) 
             print debug_msg
             debug_file.write(debug_msg + "\n")

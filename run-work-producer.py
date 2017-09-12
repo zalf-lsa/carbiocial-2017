@@ -65,22 +65,23 @@ def main():
     "main function"
 
     config = {
-        "port": 6666,
-        "start-row": 0
+        "port": "6666",
+        "start-row": "0",
+        "server": "cluster2"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
             k,v = arg.split("=")
             if k in config:
-                config[k] = int(v) 
+                config[k] = v 
 
     local_run = False
     context = zmq.Context()
     socket = context.socket(zmq.PUSH)
     if local_run:
-        socket.connect("tcp://localhost:" + str(config["port"]))
+        socket.connect("tcp://localhost:" + config["port"])
     else:
-        socket.connect("tcp://cluster2:" + str(config["port"]))
+        socket.connect("tcp://" + config["server"] + ":" + config["port"])
     
 
     soil_db_con = sqlite3.connect(PATHS[USER]["LOCAL_PATH_TO_REPO"] + "soil-carbiocial.sqlite")
@@ -257,7 +258,7 @@ def main():
         for rot in rotations:
             templates_abs_rot[rot] = generate_template_abs(rot, p["start_year"], p["end_year"], crops_data)
 
-        for row in range(config["start-row"], n_rows):
+        for row in range(int(config["start-row"]), n_rows):
             onset_dates_row = read_onset_dates(p, row)
             
             for col in range(n_cols):

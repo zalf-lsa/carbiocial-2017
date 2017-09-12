@@ -50,7 +50,11 @@
 				["PercolationRate", 16, "SUM"],
 				["Nmin", [1, 3, "SUM"], "SUM"],
 				["SumNUp", "LAST"],
-				["Count|length", "SUM"]
+				["Count|length", "SUM"],
+				["Precip|avg-precip", "AVG"],
+				["Tavg|avg-tavg", "AVG"],
+				["Tmax|avg-tmax", "AVG"],
+				["Tmax>=40", "SUM"]
 			],
 
 			{"at": "anthesis"}, [
