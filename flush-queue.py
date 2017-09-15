@@ -28,7 +28,8 @@ def main():
     "simply empty queue"
 
     config = {
-        "port": "7777"
+        "port": "7777",
+        "server": "cluster2"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -39,9 +40,9 @@ def main():
     context = zmq.Context()
     socket = context.socket(zmq.PULL)
     if LOCAL_RUN:
-        socket.connect("tcp://localhost:"+config["port"])
+        socket.connect("tcp://localhost:" + config["port"])
     else:
-        socket.connect("tcp://cluster2:"+config["port"])
+        socket.connect("tcp://" + config["server"] + ":" + config["port"])
 
     i = 0
     while True:
