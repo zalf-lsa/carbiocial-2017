@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-xps15"
+USER = "berg-lc"
 
 PATHS = {
     "hampf": {
@@ -58,7 +58,7 @@ PATHS = {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD.000/Documents/GitHub/carbiocial-2017/",
-        "LOCAL_PATH_TO_OUTPUT_DIR": "D:/carbiocial-2017-out/"
+        "LOCAL_PATH_TO_OUTPUT_DIR": "G:/carbiocial-2017-out/"
     }
 }
 
@@ -292,8 +292,8 @@ def main():
 
             data = period_to_rotation_to_data[period][rotation]
             debug_msg = "received work result " + str(i) + " customId: " + result.get("customId", "") \
-            + " next row: " + str(data["next-row"]) + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) \
-            + " rows unwritten: " + str(data["row-col-data"].keys()) 
+            + " next row: " + str(data["next-row"]) + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) #\
+            #+ " rows unwritten: " + str(data["row-col-data"].keys()) 
             print debug_msg
             debug_file.write(debug_msg + "\n")
 
@@ -307,6 +307,9 @@ def main():
                     data["insert-nodata-rows-count"] += 1
                 else:
                     write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
+                    debug_msg = "wrote " + rotation + " row: "  + str(data["next-row"]) + " next-row: " + str(data["next-row"]+1) + " rows unwritten: " + str(data["row-col-data"].keys())
+                    print debug_msg
+                    debug_file.write(debug_msg + "\n")
                     data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
                 
                 data["next-row"] += 1 # move to next row (to be written)
