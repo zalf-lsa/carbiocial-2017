@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-xps15"
+USER = "stella"
 
 PATHS = {
     "hampf": {
