@@ -2,8 +2,20 @@ import numpy as np
 import os
 from datetime import date, timedelta
 
-input_dir = "Z:/projects/carbiocial/out_grids/future_starr_2017-09-06/"
-out_dir = "Z:/projects/carbiocial/out_grids/future_starr_2017-09-06/sowing_dates/"
+
+def walklevel(some_dir, level=1):
+    some_dir = some_dir.rstrip(os.path.sep)
+    assert os.path.isdir(some_dir)
+    num_sep = some_dir.count(os.path.sep)
+    for root, dirs, files in os.walk(some_dir):
+        yield root, dirs, files
+        num_sep_this = root.count(os.path.sep)
+        if num_sep + level <= num_sep_this:
+            del dirs[:]
+
+
+input_dir = "Z:/projects/carbiocial/out_grids/future_wrf_2017-09-25/"
+out_dir = "Z:/projects/carbiocial/out_grids/future_wrf_2017-09-25/sowing_dates/"
 
 #a = np.array([[1,2,3], [4,5,6]])
 #t = np.zeros((a.shape[0], a.shape[1]))
@@ -16,7 +28,7 @@ dont_write = []
 for filename in os.listdir(out_dir):
     dont_write.append(out_dir + filename)
 
-for root, dirs, filenames in os.walk(input_dir):
+for root, dirs, filenames in walklevel(input_dir, level=0):
     for filename in filenames:
         if "sowing" in filename:
             s_doy_file = input_dir + filename

@@ -22,7 +22,7 @@ import sys
 import csv
 import types
 import os
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from collections import defaultdict
 
 import zmq
@@ -58,7 +58,7 @@ PATHS = {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD.000/Documents/GitHub/carbiocial-2017/",
-        "LOCAL_PATH_TO_OUTPUT_DIR": "D:/carbiocial-2017-out/"
+        "LOCAL_PATH_TO_OUTPUT_DIR": "G:/carbiocial-2017-out/"
     }
 }
 
@@ -224,7 +224,7 @@ def main():
     config = {
         "port": "7777",
         "start-row": "0",
-        "server": "cluster2"
+        "server": "cluster1"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -233,7 +233,9 @@ def main():
                 config[k] = v 
 
     local_run = False
-    write_normal_output_files = False
+    write_normal_output_files = True
+    if write_normal_output_files:
+        write_out_for_BYM = True #change if needed
     
     i = 0
     context = zmq.Context()
@@ -247,20 +249,21 @@ def main():
     
     n_rows = 2544
     n_cols = 1928
-        
-    print("loading template for output...")
-    template_grid = create_template_grid(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc", n_rows, n_cols)
-    datacells_per_row = np.sum(template_grid, axis=1) #.tolist()
-    print("load complete")
 
-    period_to_rotation_to_data = defaultdict(lambda: defaultdict(lambda: {
-        "row-col-data": defaultdict(dict),
-        "datacell-count": datacells_per_row.copy(), 
-        "insert-nodata-rows-count": 0,
-        "next-row": int(config["start-row"])
-    }))
+    if not write_normal_output_files:  
+        print("loading template for output...")
+        template_grid = create_template_grid(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc", n_rows, n_cols)
+        datacells_per_row = np.sum(template_grid, axis=1) #.tolist()
+        print("load complete")
 
-    debug_file = open("debug.out", "w")
+        period_to_rotation_to_data = defaultdict(lambda: defaultdict(lambda: {
+            "row-col-data": defaultdict(dict),
+            "datacell-count": datacells_per_row.copy(), 
+            "insert-nodata-rows-count": 0,
+            "next-row": int(config["start-row"])
+        }))
+
+        debug_file = open("debug.out", "w")
 
     while not leave:
         try:
@@ -292,8 +295,8 @@ def main():
 
             data = period_to_rotation_to_data[period][rotation]
             debug_msg = "received work result " + str(i) + " customId: " + result.get("customId", "") \
-            + " next row: " + str(data["next-row"]) + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) \
-            + " rows unwritten: " + str(data["row-col-data"].keys()) 
+            + " next row: " + str(data["next-row"]) + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) #\
+            #+ " rows unwritten: " + str(data["row-col-data"].keys()) 
             print debug_msg
             debug_file.write(debug_msg + "\n")
 
@@ -307,6 +310,9 @@ def main():
                     data["insert-nodata-rows-count"] += 1
                 else:
                     write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
+                    debug_msg = "wrote " + rotation + " row: "  + str(data["next-row"]) + " next-row: " + str(data["next-row"]+1) + " rows unwritten: " + str(data["row-col-data"].keys())
+                    print debug_msg
+                    debug_file.write(debug_msg + "\n")
                     data["insert-nodata-rows-count"] = 0 # should have written the nodata rows for this period and 
                 
                 data["next-row"] += 1 # move to next row (to be written)
@@ -326,26 +332,95 @@ def main():
             
 
             #with open("out/out-" + str(i) + ".csv", 'wb') as _:
-            with open("out/out-" + file_name + ".csv", 'wb') as _:
+            with open("out/" + period + "/" + file_name + ".csv", 'wb') as _:
                 writer = csv.writer(_, delimiter=",")
+
+                sowing_dates = defaultdict(list) #for BYM
+                harvest_dates = defaultdict(list) #for BYM
 
                 for data_ in result.get("data", []):
                     results = data_.get("results", [])
                     orig_spec = data_.get("origSpec", "")
                     output_ids = data_.get("outputIds", [])
 
-                    if len(results) > 0:
-                        writer.writerow([orig_spec.replace("\"", "")])
-                        for row in monica_io.write_output_header_rows(output_ids,
-                                                                      include_header_row=True,
-                                                                      include_units_row=True,
-                                                                      include_time_agg=False):
-                            writer.writerow(row)
+                    if not write_out_for_BYM:
+                        if len(results) > 0:
+                            writer.writerow([orig_spec.replace("\"", "")])
+                            for row in monica_io.write_output_header_rows(output_ids,
+                                                                        include_header_row=True,
+                                                                        include_units_row=True,
+                                                                        include_time_agg=False):
+                                writer.writerow(row)
+
+                            for row in monica_io.write_output(output_ids, results):
+                                writer.writerow(row)
+
+                        writer.writerow([])
+                    
+                    elif write_out_for_BYM:                        
+                        calc_avg_dates = True
+                        glob_rad = defaultdict(lambda: defaultdict(list)) #crop, day, list of values in the period
+                        LAI = defaultdict(lambda: defaultdict(list))
+                        days_after_sowing = defaultdict()
+                        days_after_sowing_LAI = defaultdict()
 
                         for row in monica_io.write_output(output_ids, results):
-                            writer.writerow(row)
+                            if orig_spec == unicode('"crop"'):
+                                #convert sowing and harvest to dates: fixed year to allow avg calc
+                                unique_s_year = 2017
+                                unique_h_year = unique_s_year + (row[2] - row[1])
+                                s_date = date(unique_s_year, 1, 1) + timedelta(days=row[4]-1)
+                                h_date = date(unique_h_year, 1, 1) + timedelta(days=row[5]-1)
 
-                    writer.writerow([])
+                                sowing_dates[row[3]].append(s_date)
+                                harvest_dates[row[3]].append(h_date)
+                            
+                            if orig_spec == unicode('"daily"'):
+                                while calc_avg_dates:
+                                    #find average sowing and harvest date for each crop
+                                    s_h_dates = defaultdict(lambda: defaultdict())
+                                    for cp in sowing_dates.keys():
+                                        s_h_dates[cp]["sowing"] = (np.array(sowing_dates[cp], dtype='datetime64[s]')
+                                                .view('i8').mean()
+                                                .astype('datetime64[s]')
+                                                .astype(datetime))
+                                        s_h_dates[cp]["harvest"] = (np.array(harvest_dates[cp], dtype='datetime64[s]')
+                                                .view('i8').mean()
+                                                .astype('datetime64[s]')
+                                                .astype(datetime))
+                                    
+                                    calc_avg_dates = False
+                                
+                                #store global radiation from avg sowing to avg harvest
+                                today = row[0].split("-")
+                                current_date = date(int(today[0]), int(today[1]), int(today[2]))
+                                for cp in s_h_dates.keys():
+                                    add_year = s_h_dates[cp]["harvest"].year - s_h_dates[cp]["sowing"].year #identify whether avg harvest is the next year
+                                    if (current_date >= date(current_date.year, s_h_dates[cp]["sowing"].month, s_h_dates[cp]["sowing"].day)
+                                    and current_date <= date(current_date.year + add_year, s_h_dates[cp]["harvest"].month, s_h_dates[cp]["harvest"].day)):
+                                        #we're between sowing and harvest
+                                        if current_date == date(current_date.year, s_h_dates[cp]["sowing"].month, s_h_dates[cp]["sowing"].day):
+                                            days_after_sowing[cp] = 0 # it's sowing date -> restore the counter
+                                        glob_rad[cp][days_after_sowing[cp]].append(row[3])
+                                        days_after_sowing[cp] += 1
+                                
+                                #store LAI from sowing to harvest (specific for each year)
+                                for cp in s_h_dates.keys():
+                                    if row[1] == unicode(''):
+                                        days_after_sowing_LAI[cp] = 0
+                                    if row[1] == cp:
+                                        days_after_sowing_LAI[cp] += 1
+                                        LAI[cp][days_after_sowing_LAI[cp]].append(row[2])
+                                                        
+
+                #write output
+                header = ["crop", "das", "Globrad", "LAI"]
+                writer.writerow(header)
+                for cp in s_h_dates.keys():
+                    for das in glob_rad[cp].keys():
+                        avg_rad = np.array(glob_rad[cp][das]).mean()
+                        avg_LAI = np.array(LAI[cp][das]).mean()
+                        writer.writerow([cp, das, avg_rad, avg_LAI])
 
             i = i + 1
 

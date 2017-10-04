@@ -64,10 +64,16 @@ PATH_TO_ARCHIV_DIR = "/archiv-daten/md/projects/carbiocial/"
 def main():
     "main function"
 
+    print ("____________________________________________________________________________________________________")
+    print ("CHECK N and W response: if you are running sims for calcultating BYM, turn them off. Otherwise ON!!!")
+    print ("CHECK output requirements: for maps and BYM are different!")
+    print ("____________________________________________________________________________________________________")
+    
     config = {
         "port": "6666",
         "start-row": "0",
-        "server": "cluster2"
+        "end-row": "2543",
+        "server": "cluster1"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -122,7 +128,7 @@ def main():
         }
     ]
 
-    run_period = "historical"
+    run_period = "future_wrf" #"historical"
 
     # keep soybean as the first element please
     rotations = [
@@ -224,7 +230,7 @@ def main():
     print "loading soil id grid"
     soil_ids = ascii_grid_to_np2darray(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "Soil/Carbiocial_Soil_Raster_final.asc")
 
-    i = 0
+    env_no = 0
  
     #create an env for each rotation (templates, customized within the loop)
     crops_data = {}
@@ -258,7 +264,7 @@ def main():
         for rot in rotations:
             templates_abs_rot[rot] = generate_template_abs(rot, p["start_year"], p["end_year"], crops_data)
 
-        for row in range(int(config["start-row"]), n_rows):
+        for row in range(int(config["start-row"]), int(config["end-row"])+1): #n_rows):
             onset_dates_row = read_onset_dates(p, row)
             
             for col in range(n_cols):
@@ -304,15 +310,15 @@ def main():
                                         + "|" + rot_id
 
                     socket.send_json(env) 
-                    print "sent env ", i, " customId: ", env["customId"]
-                    i += 1
+                    print "sent env ", env_no, " customId: ", env["customId"]
+                    env_no += 1
 
                     #if i > 150: #fo test purposes
                     #    return
 
     stop_send = time.clock()
 
-    print "sending ", i, " envs took ", (stop_send - start_send), " seconds"
+    print "sending ", env_no, " envs took ", (stop_send - start_send), " seconds"
     
 
 main()
