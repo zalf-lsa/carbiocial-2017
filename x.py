@@ -56,9 +56,8 @@ def write_fixed_files(row):
                 for nline in new_lines:
                     _.write(nline)
 
-for r in [154, 155, 156, 157]:
-    write_fixed_files(r)
-#write_fixed_files()
+#for r in [154, 155, 156, 157]:
+#    write_fixed_files(r)
 
 def count_data_nodata():
 
@@ -108,7 +107,7 @@ def count_data_nodata():
     new_f.close()
     old_f.close()
 
-#count_data_nodata()
+count_data_nodata()
 
 def check_debug_out():
     with open("debug.out") as _:
