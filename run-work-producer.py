@@ -33,7 +33,7 @@ import numpy as np
 from collections import defaultdict
 
 
-USER = "berg-lc"
+USER = "stella"
 
 PATHS = {
     "hampf": {
@@ -64,11 +64,16 @@ PATH_TO_ARCHIV_DIR = "/archiv-daten/md/projects/carbiocial/"
 def main():
     "main function"
 
+    print ("____________________________________________________________________________________________________")
+    print ("CHECK N and W response: if you are running sims for calcultating BYM, turn them off. Otherwise ON!!!")
+    print ("CHECK output requirements: for maps and BYM are different!")
+    print ("____________________________________________________________________________________________________")
+    
     config = {
         "port": "6666",
         "start-row": "0",
         "end-row": "2543",
-        "server": "cluster2"
+        "server": "cluster1"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
