@@ -41,7 +41,6 @@
 			],
 
 			"daily", [
-				"Date",
 				"Crop",
 				"LAI",
 				"Globrad"

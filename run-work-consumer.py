@@ -103,7 +103,6 @@ def create_output(result):
 def create_daily_avg_output(result, col):
     "create daily average LAI and global radiation output"
 
-    crops = set([])
     glob_rad = defaultdict(lambda: defaultdict(list)) #crop, day, list of values in the period
     LAI = defaultdict(lambda: defaultdict(list))
     days_after_sowing = defaultdict()    
@@ -112,31 +111,27 @@ def create_daily_avg_output(result, col):
         results = data_.get("results", [])
         orig_spec = data_.get("origSpec", "")
         output_ids = data_.get("outputIds", [])
-        
-        for row in monica_io.write_output(output_ids, results):
-            if orig_spec == unicode('"crop"'):
-                crops.add(row[0])
-            
-            if orig_spec == unicode('"daily"'):
+
+        if orig_spec == unicode('"crop"'):
+            crops = set(results[0])
+
+        elif orig_spec == unicode('"daily"'):
+            for index in range(len(results[0])):
                 #store GlobRad and LAI from sowing to harvest (specific for each year)
                 for cp in crops:
-                    if row[1] == unicode(''):
+                    if results[0][index] == unicode(''):
                         days_after_sowing[cp] = 0
-                    if row[1] == cp:
+                        continue
+                    if results[0][index] == cp:
                         days_after_sowing[cp] += 1
-                        LAI[cp][days_after_sowing[cp]].append(row[2])
-                        glob_rad[cp][days_after_sowing[cp]].append(row[3])
-                                        
+                        LAI[cp][days_after_sowing[cp]].append(results[1][index])
+                        glob_rad[cp][days_after_sowing[cp]].append(results[2][index])
 
-    #write output
-    #header = ["crop", "das", "Globrad", "LAI"]
-    #writer.writerow(header)
     avg_rows = ""
     for cp in crops:
         for das in glob_rad[cp].keys():
             avg_rad = np.array(glob_rad[cp][das]).mean()
             avg_LAI = np.array(LAI[cp][das]).mean()
-            #writer.writerow([cp, das, avg_rad, avg_LAI])
             avg_rows += str(col) + "," + str(cp) + "," + str(das) + "," + str(avg_rad) + "," + str(avg_LAI) + "\n"
 
     return avg_rows
