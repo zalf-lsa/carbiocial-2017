@@ -37,16 +37,10 @@
 		"__output for the calculation of BYM, please do not change the order of/in the blocks": "",
 		"events": [
 			"crop", [
-				["CM-count", "LAST"],
-				["Year|s-year", "FIRST"],
-				["Year|h-year", "LAST"], 
-				["Crop", "LAST"], 
-				["DOY|sowing", "FIRST"], 
-				["DOY|harvest", "LAST"]				
+				["Crop", "LAST"]			
 			],
 
 			"daily", [
-				"Date",
 				"Crop",
 				"LAI",
 				"Globrad"

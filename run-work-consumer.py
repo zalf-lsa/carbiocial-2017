@@ -245,81 +245,37 @@ def create_daily_avg_output_2(result, col):
 
 
 def create_daily_avg_output(result, col):
-    "create output structure for single run"
-
-    sowing_dates = defaultdict(list) #for BYM
-    harvest_dates = defaultdict(list) #for BYM
+    "create daily average LAI and global radiation output"
 
     glob_rad = defaultdict(lambda: defaultdict(list)) #crop, day, list of values in the period
     LAI = defaultdict(lambda: defaultdict(list))
-    days_after_sowing = defaultdict()
-    days_after_sowing_LAI = defaultdict()
+    days_after_sowing = defaultdict()    
 
     for data_ in result.get("data", []):
         results = data_.get("results", [])
         orig_spec = data_.get("origSpec", "")
         output_ids = data_.get("outputIds", [])
 
-        calc_avg_dates = True
+        if orig_spec == unicode('"crop"'):
+            crops = set(results[0])
 
-        for row in monica_io.write_output(output_ids, results):
-            if orig_spec == unicode('"crop"'):
-                #convert sowing and harvest to dates: fixed year to allow avg calc
-                unique_s_year = 2017
-                unique_h_year = unique_s_year + (row[2] - row[1])
-                s_date = date(unique_s_year, 1, 1) + timedelta(days=row[4]-1)
-                h_date = date(unique_h_year, 1, 1) + timedelta(days=row[5]-1)
-
-                sowing_dates[row[3]].append(s_date)
-                harvest_dates[row[3]].append(h_date)
-            
-            if orig_spec == unicode('"daily"'):
-                while calc_avg_dates:
-                    #find average sowing and harvest date for each crop
-                    s_h_dates = defaultdict(lambda: defaultdict())
-                    for cp in sowing_dates.keys():
-                        s_h_dates[cp]["sowing"] = (np.array(sowing_dates[cp], dtype='datetime64[s]')
-                                .view('i8').mean()
-                                .astype('datetime64[s]')
-                                .astype(datetime))
-                        s_h_dates[cp]["harvest"] = (np.array(harvest_dates[cp], dtype='datetime64[s]')
-                                .view('i8').mean()
-                                .astype('datetime64[s]')
-                                .astype(datetime))
-                    
-                    calc_avg_dates = False
-                
-                #store global radiation from avg sowing to avg harvest
-                today = row[0].split("-")
-                current_date = date(int(today[0]), int(today[1]), int(today[2]))
-                for cp in s_h_dates.keys():
-                    add_year = s_h_dates[cp]["harvest"].year - s_h_dates[cp]["sowing"].year #identify whether avg harvest is the next year
-                    if (current_date >= date(current_date.year, s_h_dates[cp]["sowing"].month, s_h_dates[cp]["sowing"].day)
-                    and current_date <= date(current_date.year + add_year, s_h_dates[cp]["harvest"].month, s_h_dates[cp]["harvest"].day)):
-                        #we're between sowing and harvest
-                        if current_date == date(current_date.year, s_h_dates[cp]["sowing"].month, s_h_dates[cp]["sowing"].day):
-                            days_after_sowing[cp] = 0 # it's sowing date -> restore the counter
-                        glob_rad[cp][days_after_sowing[cp]].append(row[3])
+        elif orig_spec == unicode('"daily"'):
+            for index in range(len(results[0])):
+                #store GlobRad and LAI from sowing to harvest (specific for each year)
+                for cp in crops:
+                    if results[0][index] == unicode(''):
+                        days_after_sowing[cp] = 0
+                        continue
+                    if results[0][index] == cp:
                         days_after_sowing[cp] += 1
-                
-                #store LAI from sowing to harvest (specific for each year)
-                for cp in s_h_dates.keys():
-                    if row[1] == unicode(''):
-                        days_after_sowing_LAI[cp] = 0
-                    if row[1] == cp:
-                        days_after_sowing_LAI[cp] += 1
-                        LAI[cp][days_after_sowing_LAI[cp]].append(row[2])
-                                        
+                        LAI[cp][days_after_sowing[cp]].append(results[1][index])
+                        glob_rad[cp][days_after_sowing[cp]].append(results[2][index])
 
-    #write output
-    #header = ["crop", "das", "Globrad", "LAI"]
-    #writer.writerow(header)
     avg_rows = ""
-    for cp in s_h_dates.keys():
+    for cp in crops:
         for das in glob_rad[cp].keys():
             avg_rad = np.array(glob_rad[cp][das]).mean()
             avg_LAI = np.array(LAI[cp][das]).mean()
-            #writer.writerow([cp, das, avg_rad, avg_LAI])
             avg_rows += str(col) + "," + str(cp) + "," + str(das) + "," + str(avg_rad) + "," + str(avg_LAI) + "\n"
 
     return avg_rows
