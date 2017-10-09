@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "stella"
+USER = "berg-xps15"
 
 PATHS = {
     "hampf": {
@@ -99,6 +99,150 @@ def create_output(result):
                 cm_count_to_crop_to_vals[vals["CM-count"]][vals["Crop"]].update(vals)
 
     return cm_count_to_crop_to_vals
+
+def create_daily_avg_output_2(result, col):
+    "create output structure for single run"
+    
+    # store for globrads
+    crop_to_sowing_doys = defaultdict(list)
+    crop_to_avg_sowing_doy = {}
+    crop_to_harvest_doys = defaultdict(list)
+    crop_to_avg_harvest_doy = {}
+    crop_to_list_of_globrads_avg = defaultdict(lambda: defaultdict(list))
+
+    # store for LAIs
+    cm_count_to_sowing_doy = {}
+    cm_count_to_harvest_doy = {}
+    crop_to_list_of_LAIs = defaultdict(lambda: defaultdict(list))
+    crop_to_list_of_globrads = defaultdict(lambda: defaultdict(list))
+
+
+    if len(result.get("data", [])) > 0 and len(result["data"][0].get("results", [])) > 0:
+
+        prev_orig_spec = None
+        for data in result.get("data", []):
+
+            results = data.get("results", [])
+            orig_spec = data.get("origSpec", "")
+            oids = data.get("outputIds", [])
+
+            # after switch from crop section to daily section, calc the average doys for globrad
+            if prev_orig_spec != None and prev_orig_spec != orig_spec:
+                for crop, sdoys in crop_to_sowing_doys.iteritems():
+                    crop_to_avg_sowing_doy[crop] = sum(sdoys) / len(sdoys)
+                for crop, sdoys in crop_to_harvest_doys.iteritems():
+                    crop_to_avg_harvest_doy[crop] = sum(sdoys) / len(sdoys)
+
+            prev_orig_spec = orig_spec
+
+            #skip empty results, e.g. when event condition haven't been met
+            if len(results) == 0:
+                continue
+
+            prev_cm_count = None
+            next_sowing_year = {}
+            next_harvest_year = {}
+            count_avg = 0
+            count = 0
+
+            # iterate over whole section, either all croping seasons or all daily results
+            assert len(oids) == len(results)
+            for kkk in range(0, len(results[0])):
+                vals = {}
+
+                # create one row of information
+                for iii in range(0, len(oids)):
+                    oid = oids[iii]
+                    val = results[iii][kkk]
+
+                    name = oid["name"] if len(oid["displayName"]) == 0 else oid["displayName"]
+
+                    if isinstance(val, types.ListType):
+                        for val_ in val:
+                            vals[name] = val_
+                    else:
+                        vals[name] = val
+
+                if orig_spec == '"crop"':
+                    s_year = vals["s-year"]
+    	            h_year = vals["h-year"]
+
+                    crop = vals["Crop"]
+
+                    next_sowing_year[crop] = next_sowing_year[crop] + 1 if crop in next_sowing_year else vals["s-year"]
+                    next_harvest_year[crop] = next_harvest_year[crop] + 1 if crop in next_harvest_year else vals["h-year"]
+
+                    s_delta = (s_year - next_sowing_year[crop]) * 365 
+                    h_delta = (h_year - next_harvest_year[crop]) * 365
+
+                    crop_to_sowing_doys[crop].append(vals["sowing"] + s_delta)
+                    crop_to_harvest_doys[crop].append(vals["harvest"] + h_delta)
+                    cm_count_to_sowing_doy[vals["CM-count"]] = vals["sowing"]
+                    cm_count_to_harvest_doy[vals["CM-count"]] = vals["harvest"]
+                    
+                elif orig_spec == '"daily"':
+                    doy = vals["DOY"]
+                    crop = vals["Crop"]
+                    cm_count = vals["CM-count"]
+
+                    days_in_year = date(vals["Year"], 12, 31).timetuple().tm_yday
+
+                    if len(crop) > 0:
+                        # collect globrads avg
+                        avg_sowing_doy = crop_to_avg_sowing_doy[crop]
+                        if avg_sowing_doy < 1:
+                            avg_sowing_doy += 365
+                        avg_harvest_doy = crop_to_avg_harvest_doy[crop]
+                        if avg_harvest_doy > days_in_year:
+                            avg_havest_doy -= 365
+
+                        if avg_sowing_doy <= doy and doy <= avg_harvest_doy:
+                            if prev_cm_count > 0 and prev_cm_count != cm_count:
+                                count_avg = 0
+                            crop_to_list_of_globrads_avg[crop][count_avg].append(vals["Globrad"])
+                            count_avg += 1
+
+                        # collect LAIs and globrads
+                        sowing_doy = cm_count_to_sowing_doy[cm_count]
+                        harvest_doy = cm_count_to_harvest_doy[cm_count]
+
+                        if sowing_doy <= doy and doy <= harvest_doy:
+                            if prev_cm_count > 0 and prev_cm_count != cm_count:
+                                count = 0
+                            crop_to_list_of_LAIs[crop][count].append(vals["LAI"])
+                            crop_to_list_of_globrads[crop][count].append(vals["Globrad"])
+                            count += 1
+
+                    prev_cm_count = cm_count
+
+                if "CM-count" not in vals or "Crop" not in vals:
+                    print "Missing CM-count or Crop in result section. Skipping results section."
+                    continue
+
+            
+        # average globrads and LAIs
+        out = ""
+        count = 0
+        for crop in sorted(crop_to_list_of_globrads.keys()):
+            list_of_globrads_avg = crop_to_list_of_globrads_avg[crop]
+            list_of_LAIs = crop_to_list_of_LAIs[crop]
+            list_of_globrads = crop_to_list_of_globrads[crop]
+
+            for das in xrange(max(map(len, [list_of_globrads_avg, list_of_LAIs, list_of_globrads]))):
+                avg_globrad_avg = -9999
+                if das < len(list_of_globrads_avg) and len(list_of_globrads_avg[das]) > 0:
+                    avg_globrad_avg = sum(list_of_globrads_avg[das]) / len(list_of_globrads_avg[das])
+                avg_lai = -9999
+                if das < len(list_of_LAIs) and len(list_of_LAIs[das]) > 0:
+                    avg_lai = sum(list_of_LAIs[das]) / len(list_of_LAIs[das])
+                avg_globrad = -9999
+                if das < len(list_of_globrads) and len(list_of_globrads[das]) > 0:
+                    avg_globrad = sum(list_of_globrads[das]) / len(list_of_globrads[das])
+                
+                out += str(col) + "," + str(crop) + "," + str(das) + "," + str(avg_globrad_avg) + "," + str(avg_globrad) + "," + str(avg_lai) + "\n"
+
+    return out
+
 
 def create_daily_avg_output(result, col):
     "create output structure for single run"
@@ -308,7 +452,7 @@ def write_grid_row_to_avg_file(row_col_data, row, rotation, period):
 
         if not os.path.isfile(path_to_file):
             with open(path_to_file, "w") as _:
-                _.write("col, crop, das, Globrad, LAI\n")
+                _.write("col, crop, das, Globrad_avg, Globrad, LAI\n")
 
         with open(path_to_file, "a") as _:
             for col, col_str in row_col_data[row].iteritems():
@@ -325,7 +469,7 @@ def main():
     config = {
         "port": "7777",
         "start-row": "0",
-        "server": "cluster3"
+        "server": "cluster2"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -400,7 +544,7 @@ def main():
             debug_file.write(debug_msg + "\n")
 
             #data["row-col-data"][row][col] = create_output(result)
-            data["row-col-data"][row][col] = create_daily_avg_output(result, col)
+            data["row-col-data"][row][col] = create_daily_avg_output_2(result, col)
             data["datacell-count"][row] -= 1
 
             while (data["next-row"] < n_rows and datacells_per_row[data["next-row"]] == 0) \

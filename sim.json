@@ -53,6 +53,27 @@
 			]			
 		],
 
+		"1 events": [
+			"crop", [
+				["CM-count", "LAST"],
+				["Year|s-year", "FIRST"],
+				["Year|h-year", "LAST"], 
+				["Crop", "LAST"], 
+				["DOY|sowing", "FIRST"], 
+				["DOY|harvest", "LAST"]				
+			],
+
+			"daily", [
+				"Date",
+				"Year",
+				"DOY",
+				"CM-count",
+				"Crop",
+				"LAI",
+				"Globrad"
+			]			
+		],
+
 		"__output for the maps": "",
 		"_events": [
 			"crop", [
