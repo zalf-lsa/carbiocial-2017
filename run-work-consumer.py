@@ -262,20 +262,20 @@ def create_daily_avg_output(result, col):
         elif orig_spec == unicode('"daily"'):
             for index in range(len(results[0])):
                 #store GlobRad and LAI from sowing to harvest (specific for each year)
-                for cp in crops:
-                    if results[0][index] == unicode(''):
+                if results[0][index] == unicode(''):
+                    for cp in crops:
                         days_after_sowing[cp] = 0
-                        continue
-                    if results[0][index] == cp:
-                        days_after_sowing[cp] += 1
-                        LAI[cp][days_after_sowing[cp]].append(results[1][index])
-                        glob_rad[cp][days_after_sowing[cp]].append(results[2][index])
+                else: 
+                    cp = results[0][index]
+                    days_after_sowing[cp] += 1
+                    LAI[cp][days_after_sowing[cp]].append(results[1][index])
+                    glob_rad[cp][days_after_sowing[cp]].append(results[2][index])
 
     avg_rows = ""
     for cp in crops:
-        for das in glob_rad[cp].keys():
-            avg_rad = np.array(glob_rad[cp][das]).mean()
-            avg_LAI = np.array(LAI[cp][das]).mean()
+        for das in sorted(glob_rad[cp].keys()):
+            avg_rad = sum(glob_rad[cp][das]) / len(glob_rad[cp][das]) #np.array(glob_rad[cp][das]).mean()
+            avg_LAI = sum(LAI[cp][das]) / len(LAI[cp][das]) #np.array(LAI[cp][das]).mean()
             avg_rows += str(col) + "," + str(cp) + "," + str(das) + "," + str(avg_rad) + "," + str(avg_LAI) + "\n"
 
     return avg_rows
@@ -500,7 +500,7 @@ def main():
             debug_file.write(debug_msg + "\n")
 
             #data["row-col-data"][row][col] = create_output(result)
-            data["row-col-data"][row][col] = create_daily_avg_output_2(result, col)
+            data["row-col-data"][row][col] = create_daily_avg_output(result, col)
             data["datacell-count"][row] -= 1
 
             while (data["next-row"] < n_rows and datacells_per_row[data["next-row"]] == 0) \
