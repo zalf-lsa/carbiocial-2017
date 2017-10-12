@@ -33,7 +33,7 @@ import numpy as np
 from collections import defaultdict
 
 
-USER = "stella"
+USER = "berg-xps15"
 
 PATHS = {
     "hampf": {
@@ -73,7 +73,7 @@ def main():
         "port": "6666",
         "start-row": "0",
         "end-row": "2543",
-        "server": "cluster1"
+        "server": "cluster2"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -128,7 +128,7 @@ def main():
         }
     ]
 
-    run_period = "future_wrf" #"historical"
+    run_period = "future_starr" #"historical"
 
     # keep soybean as the first element please
     rotations = [
