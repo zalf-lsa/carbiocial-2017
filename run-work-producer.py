@@ -132,7 +132,7 @@ def main():
 
     # keep soybean as the first element please
     rotations = [
-        ("soybean_7", "cotton"),
+        #("soybean_7", "cotton")#,
         ("soybean_8", "maize")
     ]
 

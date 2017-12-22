@@ -14,8 +14,8 @@ def walklevel(some_dir, level=1):
             del dirs[:]
 
 
-input_dir = "Z:/projects/carbiocial/out_grids/future_wrf_2017-09-25/"
-out_dir = "Z:/projects/carbiocial/out_grids/future_wrf_2017-09-25/sowing_dates/"
+input_dir = "Z:/projects/carbiocial/out_grids/future_wrf/"
+out_dir = "Z:/projects/carbiocial/out_grids/future_wrf/sowing_dates2/"
 
 #a = np.array([[1,2,3], [4,5,6]])
 #t = np.zeros((a.shape[0], a.shape[1]))
@@ -27,6 +27,8 @@ out_dir = "Z:/projects/carbiocial/out_grids/future_wrf_2017-09-25/sowing_dates/"
 dont_write = []
 for filename in os.listdir(out_dir):
     dont_write.append(out_dir + filename)
+
+unhandled = []
 
 for root, dirs, filenames in walklevel(input_dir, level=0):
     for filename in filenames:
@@ -48,11 +50,36 @@ for root, dirs, filenames in walklevel(input_dir, level=0):
             s_dates = []
             #s_dates.fill("-9999")
 
+            #read all years
+            year_set = set()
+            for i in range(len(s_doys)):
+                row = []
+                for j in range(len(s_doys[i])):
+                    if int(s_years[i][j]) != -9999:
+                        year_set.add(int(s_years[i][j]))
+            print("number of years: " + str(len(year_set)))
+            for yr in year_set:
+                print (str(yr))
+
+            if len(year_set)>2:
+                print("unhadled case: too many sowing years in " + s_year_file)
+                unhandled.append(s_year_file)
+
+            if "soybean" in s_year_file.split("_")[0] and len(year_set)==1:
+                print ("unhadled case: soybean sown in the same year for all the study area in " + s_year_file)
+                unhandled.append(s_year_file)
+
             for i in range(len(s_doys)):
                 row = []
                 for j in range(len(s_doys[i])):
                     sowing_doy = int(s_doys[i][j])
                     sowing_year = int(s_years[i][j])
+
+                    #normalize years to reference values
+                    if sowing_year == min(year_set) and len(year_set)==2:
+                        sowing_year = 2010
+                    else:                        
+                        sowing_year = 2011
 
                     if sowing_doy == -9999:
                         row.append("-9999")
@@ -78,8 +105,10 @@ for root, dirs, filenames in walklevel(input_dir, level=0):
                 for row in s_dates:
                     f.write(row + "\n")
 
-            print(out_file + "written!")
-
+            print(out_file + " written!")
+print("unhandled files:")
+for unh_f in unhandled:
+    print unh_f
 print("I'm done")
 
 

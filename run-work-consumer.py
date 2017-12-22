@@ -499,8 +499,8 @@ def main():
             print debug_msg
             debug_file.write(debug_msg + "\n")
 
-            #data["row-col-data"][row][col] = create_output(result)
-            data["row-col-data"][row][col] = create_daily_avg_output(result, col)
+            data["row-col-data"][row][col] = create_output(result)
+            #data["row-col-data"][row][col] = create_daily_avg_output(result, col)
             data["datacell-count"][row] -= 1
 
             while (data["next-row"] < n_rows and datacells_per_row[data["next-row"]] == 0) \
@@ -509,8 +509,8 @@ def main():
                 if datacells_per_row[data["next-row"]] == 0:
                     data["insert-nodata-rows-count"] += 1
                 else:
-                    #write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
-                    write_grid_row_to_avg_file(data["row-col-data"], data["next-row"], rotation, period)
+                    write_row_to_grids(data["row-col-data"], data["next-row"], data["insert-nodata-rows-count"], template_grid, rotation, period)
+                    #write_grid_row_to_avg_file(data["row-col-data"], data["next-row"], rotation, period)
                     debug_msg = "wrote " + rotation + " row: "  + str(data["next-row"]) + " next-row: " + str(data["next-row"]+1) + " rows unwritten: " + str(data["row-col-data"].keys())
                     print debug_msg
                     debug_file.write(debug_msg + "\n")
