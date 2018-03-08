@@ -31,7 +31,7 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-xps15"
+USER = "berg-lc"
 
 PATHS = {
     "hampf": {
@@ -55,10 +55,10 @@ PATHS = {
         "LOCAL_PATH_TO_OUTPUT_DIR": "out/"
     },
     "berg-lc": {
-        "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
-        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD.000/Documents/GitHub/carbiocial-2017/",
-        "LOCAL_PATH_TO_OUTPUT_DIR": "G:/carbiocial-2017-out/"
+        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/",
+        "LOCAL_PATH_TO_OUTPUT_DIR": "out/"
     }
 }
 
@@ -425,7 +425,7 @@ def main():
     config = {
         "port": "7777",
         "start-row": "0",
-        "server": "cluster2"
+        "server": "localhost"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
