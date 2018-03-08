@@ -31,16 +31,21 @@ import monica_io
 import re
 import numpy as np
 
-USER = "berg-xps15"
+USER = "hampf-desktop"
 
 PATHS = {
     "hampf": {
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/hampf/Documents/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "Z:/md/projects/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/Users/hampf/Documents/GitHub/carbiocial-2017/",
+        "LOCAL_PATH_TO_OUTPUT_DIR": "out/"
+    },
+    "hampf-desktop": {
         "INCLUDE_FILE_BASE_PATH": "C:/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "Z:/md/projects/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/GitHub/carbiocial-2017/",
         "LOCAL_PATH_TO_OUTPUT_DIR": "out/"
     },
-
     "stella": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/stella/Documents/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "Z:/projects/carbiocial/",

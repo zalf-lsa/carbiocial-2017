@@ -33,13 +33,18 @@ import numpy as np
 from collections import defaultdict
 
 
-USER = "berg-xps15"
+USER = "hampf-desktop"
 
 PATHS = {
     "hampf": {
         "INCLUDE_FILE_BASE_PATH": "C:/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "Z:/md/projects/carbiocial/",
         "LOCAL_PATH_TO_REPO": "C:/GitHub/carbiocial-2017/"
+    },
+    "hampf-desktop": {
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/hampf/Documents/GitHub",
+        "LOCAL_PATH_TO_ARCHIV": "Z:/md/projects/carbiocial/",
+        "LOCAL_PATH_TO_REPO": "C:/Users/hampf/Documents/GitHub/carbiocial-2017/"
     },
     "stella": {
         "INCLUDE_FILE_BASE_PATH": "C:/Users/stella/Documents/GitHub",
@@ -73,7 +78,7 @@ def main():
         "port": "6666",
         "start-row": "0",
         "end-row": "2543",
-        "server": "cluster2"
+        "server": "localhost"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
