@@ -57,9 +57,9 @@ PATHS = {
         "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/"
     },
     "berg-lc": {
-        "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD.000/Documents/GitHub",
+        "INCLUDE_FILE_BASE_PATH": "C:/Users/berg.ZALF-AD/GitHub",
         "LOCAL_PATH_TO_ARCHIV": "P:/carbiocial/",
-        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD.000/Documents/GitHub/carbiocial-2017/"
+        "LOCAL_PATH_TO_REPO": "C:/Users/berg.ZALF-AD/GitHub/carbiocial-2017/"
     }
 }
 
@@ -78,7 +78,8 @@ def main():
         "port": "6666",
         "start-row": "0",
         "end-row": "2543",
-        "server": "localhost"
+        "server": "localhost",
+        "period": "historical"
     }
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -133,7 +134,7 @@ def main():
         }
     ]
 
-    run_period = "future_starr" #"historical"
+    run_period = config["period"]
 
     # keep soybean as the first element please
     rotations = [

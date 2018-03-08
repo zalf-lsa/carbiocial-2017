@@ -10,32 +10,32 @@
 		"SOY_7": {
 			"is-winter-crop": false,
 			"cropParams": {
-				"species": ["include-from-file", "monica-parameters/projects/carbiocial/soybean-br.json"],
-				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/soybean-VII-br.json"]
+				"species": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/soybean.json"],
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/VII.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/soybean.json"]
 		},
 		"SOY_8": {
 			"is-winter-crop": false,
 			"cropParams": {
-				"species": ["include-from-file", "monica-parameters/projects/carbiocial/soybean-br.json"],
-				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/soybean-VIII-br.json"]
+				"species": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/soybean.json"],
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/VIII.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/soybean.json"]
 		},
 		"MZ": {
 			"is-winter-crop": false,
 			"cropParams": {
-				"species": ["include-from-file", "monica-parameters/projects/carbiocial/maize-br.json"],
-				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/grain-maize-br.json"]
+				"species": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/maize_br.json"],
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/grain_maize_br.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/maize.json"]
 		},
 		"CO": {
 			"is-winter-crop": false,
 			"cropParams": {
-				"species": ["include-from-file", "monica-parameters/projects/carbiocial/cotton-br.json"],
-				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/cotton-mid-br.json"]
+				"species": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/cotton.json"],
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/cotton_br_mid.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/cotton.json"]
 		}
