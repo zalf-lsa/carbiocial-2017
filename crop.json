@@ -38,6 +38,14 @@
 				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/cotton_br_mid.json"]
 			},
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/cotton.json"]
+		},
+		"SUN": {
+			"is-winter-crop": false,
+			"cropParams": {
+				"species": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/sunflower.json"],
+				"cultivar": ["include-from-file", "monica-parameters/projects/carbiocial/febr-2018-run/sunflower_br.json"]
+			},
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/maize.json"]
 		}
 	},
 	

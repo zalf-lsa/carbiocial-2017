@@ -91,6 +91,47 @@
 			]
 		},
 
+	"sunflower":		
+		{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "SUN"],
+					"days": 5,
+					"after": "Harvest"					
+				},
+				{ 
+					"type": "AutomaticHarvest", 
+					"latest-date": "2199-09-10",
+					"min-%-asw": 0,
+					"max-%-asw": 150,
+					"max-3d-precip-sum": 999,
+					"max-curr-day-precip": 999,
+					"harvest-time": "maturity"
+				},
+				{
+					"type": "NDemandFertilization",
+					"stage": 1,
+					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"],
+					"N-demand": [60, "kg"],
+					"depth": [0.3, "m"]
+				},
+				{
+					"type": "NDemandFertilization",
+					"stage": 3,
+					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"],
+					"N-demand": [60, "kg"],
+					"depth": [0.9, "m"]
+				},
+				{ 
+					"type": "Tillage",
+					"days": 1,
+					"after": "Harvest", 
+					"depth": 0.2
+				}
+			]
+		},
+
 	"cotton":		
 		{
 			"worksteps": [

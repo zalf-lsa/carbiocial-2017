@@ -115,6 +115,21 @@ def main():
 
     periods = [
         {
+            "name": "future_wrf",
+            "start_year": 2001,
+            "end_year": 2040,
+            "climate_folder": "climate-data-years-2001-2040-rows-0-2544"
+        },
+        {
+            "name": "future_starr",
+            "start_year": 2013,
+            "end_year": 2040,
+            "climate_folder": "climate-data-years-2013-2040-rows-0-2544"
+        }
+    ]
+
+    periods_all = [
+        {
             "name": "historical",
             "start_year": 1981,
             "end_year": 2012,
@@ -134,12 +149,13 @@ def main():
         }
     ]
 
-    run_period = config["period"]
+    #run_period = config["period"]
 
     # keep soybean as the first element please
     rotations = [
-        #("soybean_7", "cotton")#,
-        ("soybean_8", "maize")
+        ("soybean_7", "cotton")#,
+        #("soybean_8", "maize"),
+        #("soybean_8", "sunflower")
     ]
 
     n_rows = 2544
@@ -260,8 +276,8 @@ def main():
 
     start_send = time.clock()
     for p in periods:
-        if p["name"] != run_period:
-            continue
+        #if p["name"] != run_period:
+        #    continue
         # onset are not anymore read from grids
         #print ("loading rain onset grids for " + p["name"])
         #rain_onset = grids_to_3darrays(PATHS[USER]["LOCAL_PATH_TO_ARCHIV"] + "rain_onset_grids/" + p["name"], p["start_year"], p["end_year"])
