@@ -42,6 +42,7 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
     
     #max crop cycle duration; 10 days between harvest and sowing
     max_mz_c = 160 #used only the last year
+    max_sun_c = 160 #used only the last year
     max_co_c = 210 #used only the last year
     max_soy_c = 130
     if "soybean_8" in rot:
@@ -50,6 +51,7 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
     cm = -1
     current_index = -1 #identifies current crop
     latest_harvest_mz = date(2199, 1, 1) # here to comply with q&d test
+    latest_harvest_sun = date(2199, 1, 1)
     latest_harvest_co = date(2199, 1, 1)
 
     #ref_dates = [(year, onset_doy)]
@@ -65,11 +67,13 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
             doy_next = int(ref_dates[rd+1][1])
             next_onset = date(year_next, 1, 1) + timedelta(days=doy_next - 6)
             latest_harvest_mz = next_onset
+            latest_harvest_sun = next_onset
             latest_harvest_co = next_onset
         else:
             #the last year of the list does not have a next onset :)
             latest_harvest_mz = latest_harvest_soy + timedelta(days=(5 + max_mz_c))
-            latest_harvest_co = latest_harvest_soy + timedelta(days=(5 + max_co_c))
+            latest_harvest_sun = latest_harvest_soy + timedelta(days=(5 + max_mz_c))
+            latest_harvest_co = latest_harvest_soy + timedelta(days=(5 + max_sun_c))
         
 
         for i in range(len(rot)):
@@ -83,6 +87,8 @@ def set_abs_dates(rot, template_abs_rot, ref_dates):
                 harvest_ws["latest-date"] = unicode(latest_harvest_soy.isoformat())
             elif crop_in_rotation == "maize":
                 harvest_ws["latest-date"] = unicode(latest_harvest_mz.isoformat())
+            elif crop_in_rotation == "sunflower":
+                harvest_ws["latest-date"] = unicode(latest_harvest_sun.isoformat())
             elif crop_in_rotation == "cotton":
                 harvest_ws["latest-date"] = unicode(latest_harvest_co.isoformat())
         
