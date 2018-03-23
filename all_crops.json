@@ -113,14 +113,14 @@
 					"type": "NDemandFertilization",
 					"stage": 1,
 					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"],
-					"N-demand": [60, "kg"],
+					"N-demand": [52.5, "kg"],
 					"depth": [0.3, "m"]
 				},
 				{
 					"type": "NDemandFertilization",
 					"stage": 3,
 					"partition": ["include-from-file", "monica-parameters/mineral-fertilisers/AS.json"],
-					"N-demand": [60, "kg"],
+					"N-demand": [52.5, "kg"],
 					"depth": [0.9, "m"]
 				},
 				{ 
